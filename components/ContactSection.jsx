@@ -1,13 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 import { WA_LINK, WA_DISPLAY, SOCIAL_LINKS } from "@/lib/constants";
+
+const EMPTY_FORM = { nombre: "", negocio: "", telefono: "", mensaje: "" };
+const FIELD_BY_ID = { fname: "nombre", fbiz: "negocio", ftel: "telefono", fmsg: "mensaje" };
 
 export function ContactSection() {
   const { t } = useLanguage();
   const head = useReveal();
   const grid = useReveal();
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+
+  function handleChange(e) {
+    const field = FIELD_BY_ID[e.target.id];
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("request failed");
+      setStatus("success");
+      setForm(EMPTY_FORM);
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
     <section className="section-light" id="contacto">
@@ -66,22 +94,59 @@ export function ContactSection() {
               </div>
             </div>
           </div>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit}>
             <div className="form-field">
               <label htmlFor="fname">{t("form.nombre")}</label>
-              <input id="fname" type="text" placeholder={t("form.nombre.placeholder")} required />
+              <input
+                id="fname"
+                type="text"
+                value={form.nombre}
+                onChange={handleChange}
+                placeholder={t("form.nombre.placeholder")}
+                required
+              />
             </div>
             <div className="form-field">
               <label htmlFor="fbiz">{t("form.negocio")}</label>
-              <input id="fbiz" type="text" placeholder={t("form.negocio.placeholder")} />
+              <input
+                id="fbiz"
+                type="text"
+                value={form.negocio}
+                onChange={handleChange}
+                placeholder={t("form.negocio.placeholder")}
+              />
+            </div>
+            <div className="form-field">
+              <label htmlFor="ftel">{t("form.telefono")}</label>
+              <input
+                id="ftel"
+                type="tel"
+                value={form.telefono}
+                onChange={handleChange}
+                placeholder={t("form.telefono.placeholder")}
+                required
+              />
             </div>
             <div className="form-field">
               <label htmlFor="fmsg">{t("form.mensaje")}</label>
-              <textarea id="fmsg" placeholder={t("form.mensaje.placeholder")} required></textarea>
+              <textarea
+                id="fmsg"
+                value={form.mensaje}
+                onChange={handleChange}
+                placeholder={t("form.mensaje.placeholder")}
+                required
+              ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-              {t("form.submit")}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={status === "sending"}
+              style={{ width: "100%", justifyContent: "center" }}
+            >
+              {status === "sending" ? t("form.sending") : t("form.submit")}
             </button>
+            {status === "success" && <p className="form-status form-status-ok">{t("form.success")}</p>}
+            {status === "error" && <p className="form-status form-status-error">{t("form.error")}</p>}
           </form>
         </div>
       </div>

@@ -71,6 +71,7 @@ p{line-height:1.65; color:var(--ivory-dim);}
 }
 .btn-primary{background:var(--gold); color:var(--ink);}
 .btn-primary:hover{transform:translateY(-2px); background:#D6B36E;}
+.btn:disabled{opacity:0.6; cursor:default; pointer-events:none;}
 .btn-ghost{border:1px solid var(--line-dark); color:var(--ivory);}
 .btn-ghost:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-2px);}
 .section-light .btn-ghost{border-color:var(--line-light); color:var(--ink);}
@@ -376,6 +377,10 @@ section{padding:96px 0;}
 }
 .form-field input:focus, .form-field textarea:focus{outline:2px solid var(--gold-dim); outline-offset:1px;}
 .form-field textarea{min-height:110px; resize:vertical;}
+
+.form-status{margin-top:16px; font-family:var(--mono); font-size:12.5px; letter-spacing:0.02em; line-height:1.5;}
+.form-status-ok{color:var(--gold-dim);}
+.form-status-error{color:#B54A3F;}
 
 footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px 0 32px;}
 .footer-top{display:flex; flex-direction:column; gap:36px; margin-bottom:40px;}
