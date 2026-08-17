@@ -13,6 +13,7 @@ const PACKAGES = [
 function PackageCard({ pkg, index }) {
   const { t } = useLanguage();
   const reveal = useReveal();
+  const title = t(`${pkg.key}.h3`);
 
   return (
     <div
@@ -22,7 +23,9 @@ function PackageCard({ pkg, index }) {
       style={{ transitionDelay: `${index * 0.12}s` }}
     >
       <span className="pname">{pkg.name}</span>
-      <h3>{t(`${pkg.key}.h3`)}</h3>
+      {/* data-shine duplica el mismo texto para la capa de brillo superpuesta (::after).
+          El texto real de abajo se queda siempre solido y dorado, sin tocar su color. */}
+      <h3 data-shine={title}>{title}</h3>
       <p className="pdesc">{t(`${pkg.key}.desc`)}</p>
       <ul>
         {Array.from({ length: pkg.items }, (_, i) => i + 1).map((n) => (
