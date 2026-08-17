@@ -247,7 +247,7 @@ section{padding:96px 0;}
   letter-spacing:0.08em; text-transform:uppercase; padding:5px 10px;
 }
 .package .pname{font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin-bottom:8px;}
-.package h3{font-size:26px; margin-bottom:14px;}
+.package h3{font-size:26px; margin-bottom:14px; color:var(--gold);}
 .package .pdesc{font-size:14px; margin-bottom:28px; min-height:60px; color:var(--gold);}
 .package ul{display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex-grow:1;}
 .package li{font-size:13.5px; display:flex; gap:10px; color:var(--ivory-dim); line-height:1.4;}
