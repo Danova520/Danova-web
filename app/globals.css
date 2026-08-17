@@ -248,6 +248,39 @@ section{padding:96px 0;}
 }
 .package .pname{font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin-bottom:8px;}
 .package h3{font-size:26px; margin-bottom:14px; color:var(--gold);}
+/* Destello dorado en el subtitulo de cada tarjeta. El color solido de arriba
+   queda como base/fallback siempre visible; el barrido con degradado solo se
+   activa si el navegador soporta recortar el fondo al texto. */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .package h3{
+    background-image:linear-gradient(100deg, var(--gold) 35%, var(--ivory) 50%, var(--gold) 65%);
+    background-size:240% 100%;
+    background-position:200% 0;
+    background-repeat:no-repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+    animation:packageShine 7.5s ease-in-out infinite;
+    animation-play-state:paused;
+  }
+  .packages.shine-active .package h3{animation-play-state:running;}
+  .package:nth-of-type(2) h3{animation-delay:0.3s;}
+  .package:nth-of-type(3) h3{animation-delay:0.6s;}
+}
+@keyframes packageShine{
+  0%{background-position:200% 0;}
+  20%{background-position:-40% 0;}
+  100%{background-position:-40% 0;}
+}
+@media (prefers-reduced-motion: reduce){
+  .package h3{
+    animation:none !important;
+    background-image:none !important;
+    -webkit-text-fill-color:var(--gold) !important;
+    color:var(--gold) !important;
+  }
+}
 .package .pdesc{font-size:14px; margin-bottom:28px; min-height:60px; color:var(--gold);}
 .package ul{display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex-grow:1;}
 .package li{font-size:13.5px; display:flex; gap:10px; color:var(--ivory-dim); line-height:1.4;}

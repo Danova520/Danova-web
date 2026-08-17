@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
@@ -38,6 +39,19 @@ function PackageCard({ pkg, index }) {
 export function PackagesSection() {
   const { t } = useLanguage();
   const head = useReveal();
+  const gridRef = useRef(null);
+  const [shineActive, setShineActive] = useState(false);
+
+  // El destello de los subtitulos solo corre mientras la seccion esta en pantalla.
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setShineActive(entry.isIntersecting), {
+      threshold: 0.2,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section className="section-light" id="paquetes">
@@ -47,7 +61,7 @@ export function PackagesSection() {
           <h2>{t("paquetes.h2")}</h2>
           <p>{t("paquetes.p")}</p>
         </div>
-        <div className="packages">
+        <div className={`packages ${shineActive ? "shine-active" : ""}`} ref={gridRef}>
           {PACKAGES.map((pkg, index) => (
             <PackageCard key={pkg.key} pkg={pkg} index={index} />
           ))}
