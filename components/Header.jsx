@@ -20,9 +20,14 @@ export function Header() {
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 40);
+      // Solo actualiza el estado cuando el valor realmente cambia, para no
+      // forzar un re-render en cada tick de scroll (decenas por segundo).
+      setScrolled((prev) => {
+        const next = window.scrollY > 40;
+        return prev === next ? prev : next;
+      });
     }
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
