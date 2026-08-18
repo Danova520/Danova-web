@@ -12,9 +12,8 @@ import { FaqSection } from "@/components/FaqSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { ChatWidget } from "@/components/ChatWidget";
 import { SmoothAnchorLinks } from "@/components/SmoothAnchorLinks";
-import { CustomCursor } from "@/components/CustomCursor";
+import { DeferredWidgets } from "@/components/DeferredWidgets";
 
 export default function Home() {
   return (
@@ -36,10 +35,9 @@ export default function Home() {
       </main>
 
       <Footer />
-      <ChatWidget />
       <WhatsAppFloat />
       <SmoothAnchorLinks />
-      <CustomCursor />
+      <DeferredWidgets />
     </>
   );
 }
