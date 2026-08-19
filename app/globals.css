@@ -236,6 +236,10 @@ section{padding:96px 0;}
 
 /* ---------- PAQUETES ---------- */
 .packages{display:grid; gap:24px;}
+/* Mas separacion cuando las tarjetas se apilan en una sola columna, para que
+   el badge "Recomendado" (que sobresale por encima de la tarjeta) no quede
+   pegado a la tarjeta anterior. */
+@media(max-width:899px){.packages{gap:40px;}}
 @media(min-width:900px){.packages{grid-template-columns:repeat(3,1fr); align-items:stretch;}}
 .package{
   background:var(--bg-soft); border:1px solid var(--line-dark); padding:38px 30px;

@@ -59,7 +59,7 @@ export function PackagesSection() {
   return (
     <section className="section-light" id="paquetes">
       <div className="wrap">
-        <div className={head.className} data-reveal ref={head.ref}>
+        <div className={`section-head ${head.className}`} data-reveal ref={head.ref}>
           <div className="eyebrow">{t("paquetes.eyebrow")}</div>
           <h2>{t("paquetes.h2")}</h2>
           <p>{t("paquetes.p")}</p>
