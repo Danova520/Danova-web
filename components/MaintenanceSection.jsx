@@ -3,7 +3,11 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
-const TIERS = ["1", "2", "3"];
+const TIERS = [
+  { key: "maint1", items: 3 },
+  { key: "maint2", items: 4 },
+  { key: "maint3", items: 4 },
+];
 
 export function MaintenanceSection() {
   const { t } = useLanguage();
@@ -19,10 +23,17 @@ export function MaintenanceSection() {
           <p>{t("maintenance.p")}</p>
         </div>
         <div className={`maintenance-grid ${grid.className}`} data-reveal ref={grid.ref}>
-          {TIERS.map((n) => (
-            <div className="maintenance-card" key={n}>
-              <span className="mname">{t(`maint${n}.name`)}</span>
-              <span className="mprice">{t(`maint${n}.price`)}</span>
+          {TIERS.map((tier) => (
+            <div className="maintenance-card" key={tier.key}>
+              <div className="maintenance-head">
+                <span className="mname">{t(`${tier.key}.name`)}</span>
+                <span className="mprice">{t(`${tier.key}.price`)}</span>
+              </div>
+              <ul>
+                {Array.from({ length: tier.items }, (_, i) => i + 1).map((n) => (
+                  <li key={n}>{t(`${tier.key}.li${n}`)}</li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
