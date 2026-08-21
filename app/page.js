@@ -4,6 +4,7 @@ import { ProblemSection } from "@/components/ProblemSection";
 import { SolutionSection } from "@/components/SolutionSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { PackagesSection } from "@/components/PackagesSection";
+import { MaintenanceSection } from "@/components/MaintenanceSection";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { ProcessSection } from "@/components/ProcessSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -26,6 +27,7 @@ export default function Home() {
         <SolutionSection />
         <ServicesSection />
         <PackagesSection />
+        <MaintenanceSection />
         <PortfolioSection />
         <ProcessSection />
         <AboutSection />

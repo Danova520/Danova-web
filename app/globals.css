@@ -252,6 +252,9 @@ section{padding:96px 0;}
   letter-spacing:0.08em; text-transform:uppercase; padding:5px 10px;
 }
 .package .pname{font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin-bottom:8px;}
+.package .pprice{margin-bottom:16px; display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;}
+.package .pprice-amount{font-family:var(--serif); font-size:32px; font-weight:600; color:var(--gold); line-height:1;}
+.package .pprice-note{font-family:var(--mono); font-size:11px; color:var(--ivory-dim); text-transform:uppercase; letter-spacing:0.04em;}
 .package h3{font-size:26px; margin-bottom:14px; color:var(--gold); position:relative;}
 /* Destello dorado sobre el subtitulo de cada tarjeta. El texto real de arriba
    NUNCA se toca (se queda solido, dorado, siempre legible). El brillo es una
@@ -298,6 +301,16 @@ section{padding:96px 0;}
    tarjeta (--bg-soft son colores casi idénticos). */
 .package .btn-ghost{border-color:var(--line-dark); color:var(--ivory);}
 .package .btn-ghost:hover{border-color:var(--gold); color:var(--gold);}
+
+/* ---------- MANTENIMIENTO ---------- */
+.maintenance-grid{display:grid; gap:16px;}
+@media(min-width:700px){.maintenance-grid{grid-template-columns:repeat(3,1fr);}}
+.maintenance-card{
+  background:var(--bg-soft); border:1px solid var(--line-dark); padding:24px 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.maintenance-card .mname{font-family:var(--mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ivory-dim);}
+.maintenance-card .mprice{font-family:var(--serif); font-size:22px; font-weight:600; color:var(--gold); white-space:nowrap;}
 
 /* ---------- PORTFOLIO ---------- */
 .portfolio-feature{

@@ -23,6 +23,10 @@ function PackageCard({ pkg, index }) {
       style={{ transitionDelay: `${index * 0.12}s` }}
     >
       <span className="pname">{pkg.name}</span>
+      <div className="pprice">
+        <span className="pprice-amount">{t(`${pkg.key}.price`)}</span>
+        <span className="pprice-note">{t("packages.oneTime")}</span>
+      </div>
       {/* data-shine duplica el mismo texto para la capa de brillo superpuesta (::after).
           El texto real de abajo se queda siempre solido y dorado, sin tocar su color. */}
       <h3 data-shine={title}>{title}</h3>
