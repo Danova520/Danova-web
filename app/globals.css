@@ -378,11 +378,12 @@ section{padding:96px 0;}
 .philosophy p{font-size:17px; font-family:var(--serif); font-style:italic; font-weight:300; line-height:1.6; color:var(--ivory-dim);}
 
 /* ---------- TESTIMONIOS ---------- */
-.testi-empty{
-  border:1px dashed var(--line-light); padding:56px 40px; text-align:center; max-width:640px; margin:0 auto;
+#testimonios .eyebrow::before{display:none;}
+.testi-form{
+  max-width:520px; margin:0 auto;
+  border:1px solid var(--line-light); padding:40px 36px;
 }
-.testi-empty .eyebrow{justify-content:center;}
-.testi-empty .eyebrow::before{display:none;}
+.testi-form .btn{width:100%; justify-content:center;}
 
 /* ---------- FAQ ---------- */
 .faq-list{border-top:1px solid var(--line-dark); max-width:800px;}
