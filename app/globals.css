@@ -323,17 +323,32 @@ section{padding:96px 0;}
 }
 @media(min-width:860px){.portfolio-feature{grid-template-columns:1fr 1fr;}}
 .portfolio-media{
-  aspect-ratio:4/3; background:
-    linear-gradient(135deg, var(--teal), #24332F);
-  display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+  aspect-ratio:4/3; display:flex; flex-direction:column;
+  position:relative; overflow:hidden; border-radius:0 0 10px 10px;
+  background:var(--bg-soft);
 }
-.portfolio-media .ph-label{font-family:var(--mono); font-size:12px; color:rgba(246,241,231,0.55); letter-spacing:0.1em; text-transform:uppercase;}
+/* ---------- Simulador de ventana de navegador ---------- */
+.browser-bar{
+  display:flex; align-items:center; gap:12px; flex-shrink:0;
+  padding:10px 14px; background:#100D09; border-bottom:1px solid var(--gold-dim);
+}
+.browser-dots{display:flex; gap:6px; flex-shrink:0;}
+.browser-dot{width:9px; height:9px; border-radius:50%; display:block;}
+.browser-dot-red{background:#C4574F;}
+.browser-dot-yellow{background:var(--gold);}
+.browser-dot-green{background:var(--teal);}
+.browser-url{
+  font-family:var(--mono); font-size:11.5px; color:var(--ivory-dim); letter-spacing:0.02em;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.browser-screenshot{position:relative; flex:1; min-height:0;}
 .portfolio-text{padding:44px 38px; display:flex; flex-direction:column; justify-content:center;}
 .portfolio-badge{
   display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:0.08em;
   text-transform:uppercase; color:var(--gold); border:1px solid var(--gold-dim); padding:5px 12px;
   margin-bottom:20px; width:fit-content;
 }
+.portfolio-cta{margin-top:24px; width:fit-content;}
 .portfolio-note{
   margin-top:48px; padding-top:32px; border-top:1px solid var(--line-light);
   font-size:14.5px; max-width:560px;
