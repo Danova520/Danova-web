@@ -20,9 +20,9 @@ function TestimonialCard({ item, index }) {
       ref={reveal.ref}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      <div className="testi-quote">“{item.quote[lang]}”</div>
       <div className="testi-name">{item.name}</div>
       <div className="testi-business">{item.business}</div>
+      <div className="testi-quote">“{item.quote[lang]}”</div>
     </div>
   );
 }
