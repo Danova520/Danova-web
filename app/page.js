@@ -29,9 +29,9 @@ export default function Home() {
         <PackagesSection />
         <MaintenanceSection />
         <PortfolioSection />
+        <TestimonialsSection />
         <ProcessSection />
         <AboutSection />
-        <TestimonialsSection />
         <FaqSection />
         <ContactSection />
       </main>

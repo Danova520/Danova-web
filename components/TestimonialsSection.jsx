@@ -3,10 +3,29 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
+import { testimonials } from "@/lib/testimonials";
 
 const EMPTY_FORM = { nombre: "", negocio: "", resena: "" };
 const FIELD_BY_ID = { rname: "nombre", rbiz: "negocio", rtext: "resena" };
 const RESENA_MAX_LENGTH = 500;
+
+function TestimonialCard({ item, index }) {
+  const { lang } = useLanguage();
+  const reveal = useReveal();
+
+  return (
+    <div
+      className={`testi-card ${reveal.className}`}
+      data-reveal
+      ref={reveal.ref}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+    >
+      <div className="testi-quote">“{item.quote[lang]}”</div>
+      <div className="testi-name">{item.name}</div>
+      <div className="testi-business">{item.business}</div>
+    </div>
+  );
+}
 
 export function TestimonialsSection() {
   const { t } = useLanguage();
@@ -50,7 +69,11 @@ export function TestimonialsSection() {
             {t("testimonios.eyebrow")}
           </div>
           <h2>{t("testimonios.h2")}</h2>
-          <p>{t("testimonios.p")}</p>
+        </div>
+        <div className="testi-grid">
+          {testimonials.map((item, index) => (
+            <TestimonialCard item={item} index={index} key={`${item.name}-${index}`} />
+          ))}
         </div>
         <form
           className={`testi-form ${formReveal.className}`}
@@ -58,6 +81,7 @@ export function TestimonialsSection() {
           ref={formReveal.ref}
           onSubmit={handleSubmit}
         >
+          <p className="testi-form-intro">{t("testimonios.p")}</p>
           <div className="form-field">
             <label htmlFor="rname">{t("form.nombre")}</label>
             <input
