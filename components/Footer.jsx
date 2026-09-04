@@ -63,6 +63,11 @@ export function Footer() {
           <span>{t("footer.copyright")}</span>
           <span>{t("footer.tagline")}</span>
         </div>
+        <div className="footer-credit">
+          <a href="https://danovacreators.com" target="_blank" rel="noopener">
+            {t("footer.credit")}
+          </a>
+        </div>
       </div>
     </footer>
   );
