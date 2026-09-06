@@ -28,23 +28,6 @@ function CycleWheel() {
           </div>
         ))}
       </div>
-      <div className="cycle-list">
-        {CYCLE.map((n, i) => (
-          <div className="cycle-row" key={n}>
-            <span className="cycle-dot">{i + 1}</span>
-            <span className="cycle-label">{t(`sistema.cycle${n}`)}</span>
-            {i < CYCLE.length - 1 && (
-              <span className="cycle-arrow" aria-hidden="true">↓</span>
-            )}
-          </div>
-        ))}
-        <div className="cycle-loop-note" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <path d="M12 4a8 8 0 1 1-6.93 4" strokeLinecap="round" />
-            <path d="M3 4v4h4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </div>
     </div>
   );
 }
