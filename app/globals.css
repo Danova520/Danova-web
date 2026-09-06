@@ -220,21 +220,11 @@ section{padding:96px 0;}
 
 .cycle{margin:0 auto 64px;}
 .cycle-wheel{display:none;}
-@media(min-width:700px){
-  .cycle-wheel{
-    display:block; position:relative; width:100%; max-width:420px; aspect-ratio:1;
-    margin:0 auto;
-  }
-  .cycle-list{display:none;}
-}
 .cycle-ring{position:absolute; inset:0; width:100%; height:100%;}
 .cycle-node{
   position:absolute; top:50%; left:50%; width:130px; margin-left:-65px; margin-top:-34px;
   display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;
   transform:rotate(calc(72deg * var(--i))) translateY(-38%) translateY(-116px) rotate(calc(-72deg * var(--i)));
-}
-@media(min-width:900px){
-  .cycle-node{transform:rotate(calc(72deg * var(--i))) translateY(-38%) translateY(-142px) rotate(calc(-72deg * var(--i)));}
 }
 .cycle-dot{
   width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--ink);
@@ -248,6 +238,23 @@ section{padding:96px 0;}
 .cycle-arrow{font-size:18px; color:var(--gold-dim); line-height:1;}
 .cycle-loop-note{margin-top:8px; color:var(--gold-dim); width:22px; height:22px;}
 .cycle-loop-note svg{width:22px; height:22px;}
+
+/* Estas dos reglas van al final a proposito: deben ganar sobre las reglas
+   base de arriba (".cycle-wheel{display:none}" y ".cycle-list{display:flex}")
+   en pantallas grandes, y en CSS un empate de especificidad lo gana la regla
+   que aparece despues en el archivo — daba igual que estuviera en un
+   @media, si la base se declaraba mas abajo la pisaba y se veian las dos
+   versiones (circular Y la lista) a la vez. */
+@media(min-width:700px){
+  .cycle-wheel{
+    display:block; position:relative; width:100%; max-width:420px; aspect-ratio:1;
+    margin:0 auto;
+  }
+  .cycle-list{display:none;}
+}
+@media(min-width:900px){
+  .cycle-node{transform:rotate(calc(72deg * var(--i))) translateY(-38%) translateY(-142px) rotate(calc(-72deg * var(--i)));}
+}
 
 .disciplines{display:grid; gap:2px;}
 @media(min-width:700px){.disciplines{grid-template-columns:repeat(2,1fr);}}
