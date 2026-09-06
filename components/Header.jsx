@@ -7,11 +7,9 @@ import { OrbitMark } from "@/components/OrbitMark";
 
 const NAV_LINKS = [
   { href: "#servicios", key: "nav.servicios" },
-  { href: "#paquetes", key: "nav.paquetes" },
-  { href: "#testimonios", key: "nav.testimonios" },
+  { href: "#resultados", key: "nav.resultados" },
   { href: "#proceso", key: "nav.proceso" },
   { href: "#nosotros", key: "nav.nosotros" },
-  { href: "#faq", key: "nav.faq" },
 ];
 
 export function Header() {

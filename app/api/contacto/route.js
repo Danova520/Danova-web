@@ -4,7 +4,7 @@ import { escapeHtml, sanitizeForHeader, sendSiteEmail } from "@/lib/mailer";
 // nodemailer necesita APIs de Node (sockets TLS), no funciona en el runtime Edge.
 export const runtime = "nodejs";
 
-const MAX_LENGTHS = { nombre: 120, negocio: 120, telefono: 40, mensaje: 5000 };
+const MAX_LENGTHS = { nombre: 120, negocio: 120, telefono: 40, necesita: 120, objetivo: 120, mensaje: 5000 };
 
 export async function POST(request) {
   let body;
@@ -17,6 +17,8 @@ export async function POST(request) {
   const nombre = typeof body?.nombre === "string" ? body.nombre.trim().slice(0, MAX_LENGTHS.nombre) : "";
   const negocio = typeof body?.negocio === "string" ? body.negocio.trim().slice(0, MAX_LENGTHS.negocio) : "";
   const telefono = typeof body?.telefono === "string" ? body.telefono.trim().slice(0, MAX_LENGTHS.telefono) : "";
+  const necesita = typeof body?.necesita === "string" ? body.necesita.trim().slice(0, MAX_LENGTHS.necesita) : "";
+  const objetivo = typeof body?.objetivo === "string" ? body.objetivo.trim().slice(0, MAX_LENGTHS.objetivo) : "";
   const mensaje = typeof body?.mensaje === "string" ? body.mensaje.trim().slice(0, MAX_LENGTHS.mensaje) : "";
 
   if (!nombre || !telefono || !mensaje) {
@@ -28,6 +30,8 @@ export async function POST(request) {
     `Nombre: ${nombre}`,
     `Negocio: ${negocio || "—"}`,
     `Teléfono: ${telefono}`,
+    `Qué necesita: ${necesita || "—"}`,
+    `Objetivo principal: ${objetivo || "—"}`,
     "",
     "Mensaje:",
     mensaje,
@@ -36,6 +40,8 @@ export async function POST(request) {
     <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
     <p><strong>Negocio:</strong> ${escapeHtml(negocio || "—")}</p>
     <p><strong>Teléfono:</strong> ${escapeHtml(telefono)}</p>
+    <p><strong>Qué necesita:</strong> ${escapeHtml(necesita || "—")}</p>
+    <p><strong>Objetivo principal:</strong> ${escapeHtml(objetivo || "—")}</p>
     <p><strong>Mensaje:</strong></p>
     <p>${escapeHtml(mensaje).replace(/\n/g, "<br>")}</p>
   `;

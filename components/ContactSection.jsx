@@ -4,9 +4,26 @@ import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 import { WA_LINK, WA_DISPLAY, SOCIAL_LINKS } from "@/lib/constants";
+import { translations } from "@/lib/translations";
 
-const EMPTY_FORM = { nombre: "", negocio: "", telefono: "", mensaje: "" };
-const FIELD_BY_ID = { fname: "nombre", fbiz: "negocio", ftel: "telefono", fmsg: "mensaje" };
+// El valor enviado por email usa siempre el texto en español (independiente
+// del idioma que esté viendo quien rellena el formulario), para que el equipo
+// que lo lee reciba siempre algo consistente.
+function esLabel(key) {
+  return translations[key].es;
+}
+
+const EMPTY_FORM = { nombre: "", negocio: "", telefono: "", necesita: "", objetivo: "", mensaje: "" };
+const FIELD_BY_ID = {
+  fname: "nombre",
+  fbiz: "negocio",
+  ftel: "telefono",
+  fnecesita: "necesita",
+  fobjetivo: "objetivo",
+  fmsg: "mensaje",
+};
+const NECESITA_OPTIONS = ["1", "2", "3", "4", "5", "6"];
+const OBJETIVO_OPTIONS = ["1", "2", "3", "4", "5", "6"];
 
 export function ContactSection() {
   const { t } = useLanguage();
@@ -44,6 +61,9 @@ export function ContactSection() {
           <div className="eyebrow">{t("contacto.eyebrow")}</div>
           <h2>{t("contacto.h2")}</h2>
           <p>{t("contacto.p")}</p>
+          <a href="#contacto-form" className="btn btn-primary">
+            {t("cta.crecer")}
+          </a>
         </div>
         <div className={`contact-grid ${grid.className}`} data-reveal ref={grid.ref}>
           <div className="contact-channels">
@@ -94,7 +114,7 @@ export function ContactSection() {
               </div>
             </div>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form id="contacto-form" onSubmit={handleSubmit}>
             <div className="form-field">
               <label htmlFor="fname">{t("form.nombre")}</label>
               <input
@@ -126,6 +146,32 @@ export function ContactSection() {
                 placeholder={t("form.telefono.placeholder")}
                 required
               />
+            </div>
+            <div className="form-field">
+              <label htmlFor="fnecesita">{t("form.necesita.label")}</label>
+              <select id="fnecesita" value={form.necesita} onChange={handleChange} required>
+                <option value="" disabled>
+                  {t("form.select.placeholder")}
+                </option>
+                {NECESITA_OPTIONS.map((n) => (
+                  <option value={esLabel(`form.necesita.opt${n}`)} key={n}>
+                    {t(`form.necesita.opt${n}`)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-field">
+              <label htmlFor="fobjetivo">{t("form.objetivo.label")}</label>
+              <select id="fobjetivo" value={form.objetivo} onChange={handleChange} required>
+                <option value="" disabled>
+                  {t("form.select.placeholder")}
+                </option>
+                {OBJETIVO_OPTIONS.map((n) => (
+                  <option value={esLabel(`form.objetivo.opt${n}`)} key={n}>
+                    {t(`form.objetivo.opt${n}`)}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="form-field">
               <label htmlFor="fmsg">{t("form.mensaje")}</label>
