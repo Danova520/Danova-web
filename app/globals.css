@@ -374,6 +374,7 @@ section{padding:96px 0;}
 .maintenance-card li::before{content:'—'; color:var(--gold-dim); flex-shrink:0;}
 
 /* ---------- PORTFOLIO ---------- */
+.portfolio-list{display:flex; flex-direction:column; gap:40px;}
 .portfolio-feature{
   display:grid; gap:0; border:1px solid var(--line-light); background:var(--bg);
   color:var(--ivory);
