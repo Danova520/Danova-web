@@ -17,10 +17,11 @@ export function Hero() {
             <a href="#contacto" className="btn btn-primary">
               {t("hero.cta1")}
             </a>
-            <a href="#servicios" className="btn btn-ghost">
+            <a href="#proceso" className="btn btn-ghost">
               {t("hero.cta2")}
             </a>
           </div>
+          <div className="hero-tools">{t("hero.tools")}</div>
           <div className="location-tag">
             <span className="dot"></span>
             <span>{t("hero.location")}</span>

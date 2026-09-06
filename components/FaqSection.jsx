@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
-const QUESTIONS = ["1", "2", "3", "4", "5"];
+const QUESTIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 export function FaqSection() {
   const { t } = useLanguage();

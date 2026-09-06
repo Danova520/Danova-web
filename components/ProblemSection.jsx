@@ -27,6 +27,12 @@ export function ProblemSection() {
             </div>
           ))}
         </div>
+        <div className="problema-cta">
+          <p>{t("problema.cta.question")}</p>
+          <a href="#contacto" className="btn btn-primary">
+            {t("problema.cta.button")}
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -10,7 +10,7 @@ export function PortfolioSection() {
   const feature = useReveal();
 
   return (
-    <section id="portfolio">
+    <section id="resultados">
       <div className="wrap">
         <div className={head.className} data-reveal ref={head.ref}>
           <div className="eyebrow">{t("portfolio.eyebrow")}</div>

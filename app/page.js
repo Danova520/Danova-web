@@ -1,18 +1,20 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { InstantProofStrip } from "@/components/InstantProofStrip";
 import { ProblemSection } from "@/components/ProblemSection";
-import { SolutionSection } from "@/components/SolutionSection";
-import { ServicesSection } from "@/components/ServicesSection";
+import { SystemSection } from "@/components/SystemSection";
+import { AudienceSection } from "@/components/AudienceSection";
 import { PackagesSection } from "@/components/PackagesSection";
 import { MaintenanceSection } from "@/components/MaintenanceSection";
 import { PortfolioSection } from "@/components/PortfolioSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ProcessSection } from "@/components/ProcessSection";
 import { AboutSection } from "@/components/AboutSection";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { MobileStickyCta } from "@/components/MobileStickyCta";
 import { SmoothAnchorLinks } from "@/components/SmoothAnchorLinks";
 import { DeferredWidgets } from "@/components/DeferredWidgets";
 
@@ -23,9 +25,10 @@ export default function Home() {
 
       <main id="top">
         <Hero />
+        <InstantProofStrip />
         <ProblemSection />
-        <SolutionSection />
-        <ServicesSection />
+        <SystemSection />
+        <AudienceSection />
         <PackagesSection />
         <MaintenanceSection />
         <PortfolioSection />
@@ -38,6 +41,7 @@ export default function Home() {
 
       <Footer />
       <WhatsAppFloat />
+      <MobileStickyCta />
       <SmoothAnchorLinks />
       <DeferredWidgets />
     </>

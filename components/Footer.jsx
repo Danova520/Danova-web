@@ -7,7 +7,7 @@ import { SOCIAL_LINKS } from "@/lib/constants";
 const LINKS = [
   { href: "#servicios", key: "nav.servicios" },
   { href: "#paquetes", key: "nav.paquetes" },
-  { href: "#portfolio", key: "footer.portfolio" },
+  { href: "#resultados", key: "footer.portfolio" },
   { href: "#nosotros", key: "nav.nosotros" },
   { href: "#contacto", key: "footer.contacto" },
 ];

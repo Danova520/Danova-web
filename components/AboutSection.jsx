@@ -14,6 +14,7 @@ export function AboutSection() {
         <div className={head.className} data-reveal ref={head.ref}>
           <div className="eyebrow">{t("nosotros.eyebrow")}</div>
           <h2>Dennis Alemán &amp; Abel David Núñez — DANOVA</h2>
+          <p>{t("nosotros.intro")}</p>
         </div>
         <div className={`about-grid ${grid.className}`} data-reveal ref={grid.ref}>
           <div className="about-content">

@@ -3,7 +3,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
-const STEPS = ["1", "2", "3", "4", "5", "6", "7"];
+const STEPS = ["1", "2", "3", "4"];
 
 export function ProcessSection() {
   const { t } = useLanguage();
