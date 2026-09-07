@@ -3,9 +3,9 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 export const metadata = {
-  title: "DANOVA — Agencia Digital en Carballo, Galicia",
+  title: "DANOVA — Agencia de Marketing Digital en Carballo, Galicia",
   description:
-    "DANOVA ayuda a negocios locales en Galicia a construir una presencia digital completa: web, redes sociales y contenido, pensados como un mismo sistema.",
+    "DANOVA es una agencia de marketing digital que ayuda a negocios locales en Galicia a construir una presencia digital completa: web, redes sociales y contenido, pensados como un mismo sistema.",
 };
 
 export const viewport = {
