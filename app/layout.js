@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata = {
   title: "DANOVA — Agencia de Marketing Digital en Carballo, Galicia",
   description:
-    "DANOVA es una agencia de marketing digital que ayuda a negocios locales en Galicia a construir una presencia digital completa: web, redes sociales y contenido, pensados como un mismo sistema.",
+    "DANOVA es una agencia de marketing digital en Carballo, Galicia. Diseño web, SEO y redes sociales para que tu negocio consiga más clientes.",
 };
 
 export const viewport = {
