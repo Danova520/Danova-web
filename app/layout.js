@@ -13,9 +13,25 @@ export const viewport = {
   initialScale: 1,
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "DANOVA",
+  url: "https://danovacreators.com",
+  description: "Agencia de marketing digital en Carballo, Galicia. Diseño web, SEO y redes sociales.",
+  areaServed: "ES",
+  email: "info@danovacreators.com",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className={`${fraunces.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+      </head>
       <body>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
