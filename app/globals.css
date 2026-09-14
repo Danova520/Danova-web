@@ -629,6 +629,81 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
 .chat-typing span:nth-child(3){animation-delay:0.3s;}
 @keyframes chatTyping{0%,60%,100%{opacity:0.3; transform:translateY(0);} 30%{opacity:1; transform:translateY(-3px);}}
 
+/* ---------- MASCOTA (icono del chat launcher) ---------- */
+/* Respiracion (translateY) y deambular por su rincon (translate) son dos
+   propiedades CSS distintas -- así corren a la vez sin pisarse. El deambular
+   solo usa desplazamientos hacia arriba/los lados, nunca hacia abajo, para
+   no acercarse nunca al boton de WhatsApp que queda justo debajo. */
+@keyframes mascotBreathe{
+  0%, 100%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+}
+@keyframes mascotWander{
+  0%, 100%{translate:0 0;}
+  12%{translate:5px -3px;}
+  28%{translate:-4px -7px;}
+  44%{translate:7px -2px;}
+  60%{translate:-6px -5px;}
+  76%{translate:3px -8px;}
+  90%{translate:-3px -2px;}
+}
+.chat-launcher{
+  animation:mascotBreathe 3s ease-in-out infinite, mascotWander 17s ease-in-out infinite;
+}
+.chat-launcher:hover{
+  /* En hover se queda quieta para que se note el propio efecto de hover
+     (translateY + scale) definido en la seccion CHAT WIDGET. */
+  animation:mascotWander 17s ease-in-out infinite paused;
+}
+
+/* Especificidad ".chat-launcher .mascot-svg" (2 clases) a proposito: debe
+   ganar a la regla existente ".chat-launcher svg" (clase + etiqueta) de la
+   seccion CHAT WIDGET, que si no, gana por tener mas especificidad aunque
+   esta regla este mas abajo en el archivo. */
+.chat-launcher .mascot-svg{width:34px; height:34px;}
+@media(max-width:600px){
+  .chat-launcher .mascot-svg{width:30px; height:30px;}
+}
+
+.mascot-antenna-dot{animation:mascotAntennaPulse 3.4s ease-in-out infinite;}
+@keyframes mascotAntennaPulse{0%, 100%{opacity:0.55;} 50%{opacity:1;}}
+
+.mascot-eye{transform-box:fill-box; transform-origin:center;}
+@keyframes mascotBlink{
+  0%, 100%{transform:scaleY(1);}
+  50%{transform:scaleY(0.12);}
+}
+.chat-launcher.blinking .mascot-eye{animation:mascotBlink 0.22s ease-in-out;}
+
+.mascot-arm-wave{transform-origin:24.5px 27.5px;}
+@keyframes mascotWave{
+  0%, 100%{transform:rotate(0deg);}
+  25%{transform:rotate(-28deg);}
+  50%{transform:rotate(-8deg);}
+  75%{transform:rotate(-32deg);}
+}
+.chat-launcher.waving .mascot-arm-wave{animation:mascotWave 0.9s ease-in-out;}
+
+.mascot-tooltip{
+  position:fixed; right:88px; bottom:96px; z-index:199;
+  max-width:200px; pointer-events:none;
+}
+@media(max-width:600px){
+  .mascot-tooltip{right:80px; bottom:86px; max-width:170px;}
+}
+.mascot-tooltip-bubble{
+  pointer-events:auto;
+  background:var(--bg-soft); border:1px solid var(--gold-dim); color:var(--ivory);
+  font-family:var(--sans); font-size:12.5px; line-height:1.4;
+  padding:10px 14px; border-radius:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.4);
+  animation:mascotTooltipIn .25s ease-out;
+}
+@keyframes mascotTooltipIn{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
 /* ---------- PUERTA ANIMADA (historia de los fundadores) ---------- */
 .story-door{
   position:fixed; right:20px; z-index:199;

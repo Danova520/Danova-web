@@ -7,8 +7,20 @@ import { chatKnowledgeBase, chatStrings, matchKnowledgeBase } from "@/lib/chatKn
 
 const CHAT_WA_LINK = `${WA_LINK}?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20DANOVA`;
 
+// Secciones que, al entrar en pantalla, hacen que la mascota senale con un
+// pequeno globo de texto. Cada id de seccion mapea a su clave de traduccion.
+const MASCOT_SECTIONS = {
+  resultados: "mascot.resultados",
+  testimonios: "mascot.testimonios",
+  proceso: "mascot.proceso",
+};
+
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export function ChatWidget() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
@@ -99,6 +111,74 @@ export function ChatWidget() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
 
+  // --- Mascota del chat launcher: parpadeo y saludo ocasionales, con timing aleatorio. ---
+  const [blinking, setBlinking] = useState(false);
+  const [waving, setWaving] = useState(false);
+  const [mascotTipId, setMascotTipId] = useState(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    let blinkTimeout;
+    let blinkOffTimeout;
+    function scheduleBlink() {
+      const delay = 4000 + Math.random() * 2000; // 4-6s
+      blinkTimeout = setTimeout(() => {
+        setBlinking(true);
+        blinkOffTimeout = setTimeout(() => setBlinking(false), 220);
+        scheduleBlink();
+      }, delay);
+    }
+    scheduleBlink();
+    return () => {
+      clearTimeout(blinkTimeout);
+      clearTimeout(blinkOffTimeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    let waveTimeout;
+    let waveOffTimeout;
+    function scheduleWave() {
+      const delay = 15000 + Math.random() * 5000; // 15-20s
+      waveTimeout = setTimeout(() => {
+        setWaving(true);
+        waveOffTimeout = setTimeout(() => setWaving(false), 900);
+        scheduleWave();
+      }, delay);
+    }
+    scheduleWave();
+    return () => {
+      clearTimeout(waveTimeout);
+      clearTimeout(waveOffTimeout);
+    };
+  }, []);
+
+  // Señala secciones clave con un globo de texto cuando entran en pantalla.
+  useEffect(() => {
+    let hideTimeout;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setMascotTipId(entry.target.id);
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => setMascotTipId(null), 4000);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    Object.keys(MASCOT_SECTIONS).forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => {
+      observer.disconnect();
+      clearTimeout(hideTimeout);
+    };
+  }, []);
+
   const pending = chatKnowledgeBase.filter((item) => !asked.has(item.key));
   const quickList = pending.length ? pending : chatKnowledgeBase;
   const showRestart = !pending.length && asked.size > 0;
@@ -106,21 +186,44 @@ export function ChatWidget() {
   return (
     <>
       <button
-        className="chat-launcher"
+        className={`chat-launcher ${blinking ? "blinking" : ""} ${waving ? "waving" : ""}`}
         id="chatLauncher"
         type="button"
         aria-label="Abrir chat de ayuda"
         aria-expanded={open}
         onClick={() => (open ? closeChat() : openChat())}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-          <path d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.2-3.4A7.96 7.96 0 0 1 4 12Z" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="8.5" cy="12" r="0.9" fill="currentColor" stroke="none" />
-          <circle cx="12" cy="12" r="0.9" fill="currentColor" stroke="none" />
-          <circle cx="15.5" cy="12" r="0.9" fill="currentColor" stroke="none" />
+        <svg className="mascot-svg" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          {/* Antena */}
+          <line x1="18" y1="8" x2="18" y2="4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          <circle className="mascot-antenna-dot" cx="18" cy="3" r="1.4" fill="currentColor" stroke="none" />
+
+          {/* Cabeza */}
+          <rect x="9" y="8" width="18" height="14" rx="6" stroke="currentColor" strokeWidth="1.5" />
+
+          {/* Ojos (parpadean) */}
+          <rect className="mascot-eye" x="13.2" y="13" width="2.6" height="4.2" rx="1.3" fill="currentColor" stroke="none" />
+          <rect className="mascot-eye" x="20.2" y="13" width="2.6" height="4.2" rx="1.3" fill="currentColor" stroke="none" />
+
+          {/* Sonrisa */}
+          <path d="M14.5 18.6q3.5 2.2 7 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+
+          {/* Cuerpo */}
+          <rect x="11.5" y="24" width="13" height="7.5" rx="3.2" stroke="currentColor" strokeWidth="1.5" />
+
+          {/* Brazo izquierdo, fijo */}
+          <path d="M11.5 27.5 6.5 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          {/* Brazo derecho, saluda */}
+          <path className="mascot-arm-wave" d="M24.5 27.5 29.5 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
         <span className="chat-dot"></span>
       </button>
+
+      {mascotTipId && MASCOT_SECTIONS[mascotTipId] && !open && (
+        <div className="mascot-tooltip" aria-hidden="true">
+          <div className="mascot-tooltip-bubble">{t(MASCOT_SECTIONS[mascotTipId])}</div>
+        </div>
+      )}
 
       <div className={`chat-panel ${open ? "open" : ""}`} id="chatPanel" role="dialog" aria-label="Chat de ayuda DANOVA">
         <div className="chat-header">
