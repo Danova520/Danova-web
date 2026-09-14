@@ -648,11 +648,12 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   90%{translate:-3px -2px;}
 }
 /* Sin fondo circular: el robot es la unica forma visible. El boton crece
-   para dar mas protagonismo al robot (80px / 62px en movil, antes 56/52),
-   pero como "bottom"/"right" no cambian, solo crece hacia arriba -- el
-   hueco con el boton de WhatsApp de debajo se mantiene igual de seguro. */
+   para dar mas protagonismo al robot (84px / 64px en movil, antes 80/62),
+   pero como "bottom"/"right" no cambian en ningun breakpoint (tampoco en el
+   override de la barra CTA sticky), solo crece hacia arriba -- el hueco con
+   el boton de WhatsApp de debajo se mantiene igual de seguro que antes. */
 .chat-launcher{
-  width:80px; height:80px;
+  width:84px; height:84px;
   background:transparent;
   border:none;
   box-shadow:none;
@@ -666,7 +667,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   animation:mascotWander 17s ease-in-out infinite paused;
 }
 @media(max-width:600px){
-  .chat-launcher{width:62px; height:62px;}
+  .chat-launcher{width:64px; height:64px;}
 }
 
 /* Especificidad ".chat-launcher .mascot-svg" (2 clases) a proposito: debe
@@ -674,34 +675,83 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
    seccion CHAT WIDGET, que si no, gana por tener mas especificidad aunque
    esta regla este mas abajo en el archivo. */
 .chat-launcher .mascot-svg{
-  width:80px; height:80px;
+  width:84px; height:84px;
   /* Ya no hay circulo de fondo que separe el robot del contenido de la
      pagina -- esta sombra hace que se distinga igual sobre fondos oscuros
      y claros del sitio, y refuerza que "flota" con profundidad. */
   filter:drop-shadow(0 6px 10px rgba(0,0,0,0.5)) drop-shadow(0 1px 3px rgba(0,0,0,0.45));
 }
 @media(max-width:600px){
-  .chat-launcher .mascot-svg{width:62px; height:62px;}
+  .chat-launcher .mascot-svg{width:64px; height:64px;}
 }
 
 .mascot-antenna-dot{animation:mascotAntennaPulse 3.4s ease-in-out infinite;}
 @keyframes mascotAntennaPulse{0%, 100%{opacity:0.55;} 50%{opacity:1;}}
 
-.mascot-eye{transform-box:fill-box; transform-origin:center;}
+/* ---- Expresiones: transiciones cortas entre estados sobre los MISMOS
+   elementos (transform/opacity), para que el cambio se vea fluido en vez de
+   un salto entre dibujos distintos. ---- */
+.mascot-eye-main{
+  transform-box:fill-box; transform-origin:center;
+  transition:transform .3s ease, opacity .3s ease;
+}
+.mascot-eye-arc{opacity:0; transition:opacity .3s ease;}
+.mascot-mouth-line{
+  transform-box:fill-box; transform-origin:center;
+  transition:transform .3s ease, opacity .3s ease;
+}
+.mascot-mouth-dash{opacity:0; transition:opacity .3s ease;}
+.mascot-think-dot{opacity:0; transition:opacity .25s ease;}
+.mascot-arm-left{transform-origin:18px 58px; transition:transform .35s ease;}
+.mascot-arm-right{transform-origin:54px 58px; transition:transform .35s ease;}
+
+/* Parpadeo y saludo aleatorios (reposo/saludo, chat cerrado): solo se ven
+   mientras el estado es "idle" -- en el resto de estados esas mismas clases
+   .blinking/.waving pueden seguir alternando en segundo plano sin efecto
+   visual, porque el selector exige tambien .state-idle. */
 @keyframes mascotBlink{
   0%, 100%{transform:scaleY(1);}
   50%{transform:scaleY(0.12);}
 }
-.chat-launcher.blinking .mascot-eye{animation:mascotBlink 0.22s ease-in-out;}
+.chat-launcher.state-idle.blinking .mascot-eye-main{animation:mascotBlink 0.22s ease-in-out;}
 
-.mascot-arm-wave{transform-origin:50px 49px;}
 @keyframes mascotWave{
   0%, 100%{transform:rotate(0deg);}
   25%{transform:rotate(-28deg);}
   50%{transform:rotate(-8deg);}
   75%{transform:rotate(-32deg);}
 }
-.chat-launcher.waving .mascot-arm-wave{animation:mascotWave 0.9s ease-in-out;}
+.chat-launcher.state-idle.waving .mascot-arm-right{animation:mascotWave 0.9s ease-in-out;}
+
+/* Escucha: chat abierto, el usuario esta escribiendo -- ojos mas abiertos,
+   boca mas neutra/atenta. */
+.chat-launcher.state-escucha .mascot-eye-main{transform:scaleY(1.18);}
+.chat-launcher.state-escucha .mascot-mouth-line{transform:scaleY(0.6);}
+
+/* Pensativo: el bot esta "escribiendo" -- mirada arriba, boca pensativa,
+   mano cerca de la cabeza y puntos de "pensando". */
+.chat-launcher.state-pensativo .mascot-eye-main{transform:translateY(-2.5px);}
+.chat-launcher.state-pensativo .mascot-mouth-line{opacity:0;}
+.chat-launcher.state-pensativo .mascot-mouth-dash{opacity:1;}
+.chat-launcher.state-pensativo .mascot-arm-right{transform:rotate(-125deg);}
+.chat-launcher.state-pensativo .mascot-think-dot{opacity:0.85;}
+.chat-launcher.state-pensativo .mascot-think-dot-2{transition-delay:.08s;}
+.chat-launcher.state-pensativo .mascot-think-dot-3{transition-delay:.16s;}
+
+/* Explica: acaba de llegar la respuesta -- brazo hacia fuera, boca "hablando". */
+.chat-launcher.state-explica .mascot-mouth-line{transform:scaleY(1.7) scaleX(0.85);}
+.chat-launcher.state-explica .mascot-arm-right{transform:rotate(35deg);}
+
+/* Feliz: chat abierto, estado neutro -- sonrisa amplia. */
+.chat-launcher.state-feliz .mascot-mouth-line{transform:scaleY(1.35);}
+
+/* Despedida: al cerrar el chat -- ojos entornados y sonrientes, los dos
+   brazos saludando. */
+.chat-launcher.state-despedida .mascot-eye-main{opacity:0;}
+.chat-launcher.state-despedida .mascot-eye-arc{opacity:1;}
+.chat-launcher.state-despedida .mascot-mouth-line{transform:scaleY(1.35);}
+.chat-launcher.state-despedida .mascot-arm-left{transform:rotate(-130deg);}
+.chat-launcher.state-despedida .mascot-arm-right{transform:rotate(130deg);}
 
 .mascot-tooltip{
   position:fixed; right:88px; bottom:96px; z-index:199;

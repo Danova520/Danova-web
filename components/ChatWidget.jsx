@@ -101,7 +101,9 @@ export function ChatWidget() {
   }
 
   function closeChat() {
+    setFarewell(true);
     setOpen(false);
+    setTimeout(() => setFarewell(false), 900);
   }
 
   // Reinicia la conversación visible cuando cambia el idioma, igual que el script original.
@@ -119,6 +121,37 @@ export function ChatWidget() {
   const [blinking, setBlinking] = useState(false);
   const [waving, setWaving] = useState(false);
   const [mascotTipId, setMascotTipId] = useState(null);
+  // --- Expresiones ligadas al estado real del chat ---
+  const [farewell, setFarewell] = useState(false);
+  const [explaining, setExplaining] = useState(false);
+  const prevTypingRef = useRef(false);
+
+  // "Explica": justo cuando el bot termina de "escribir" y aparece su mensaje
+  // (transicion typing true -> false), gesticula un momento y vuelve a su
+  // estado normal.
+  useEffect(() => {
+    if (prevTypingRef.current && !typing) {
+      setExplaining(true);
+      const timer = setTimeout(() => setExplaining(false), 1800);
+      prevTypingRef.current = typing;
+      return () => clearTimeout(timer);
+    }
+    prevTypingRef.current = typing;
+  }, [typing]);
+
+  // Estado visual derivado del estado real del chat (no se guarda aparte,
+  // se recalcula en cada render a partir de lo que ya existe).
+  const mascotState = farewell
+    ? "despedida"
+    : !open
+    ? "idle"
+    : typing
+    ? "pensativo"
+    : explaining
+    ? "explica"
+    : inputValue.trim().length > 0
+    ? "escucha"
+    : "feliz";
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -195,14 +228,14 @@ export function ChatWidget() {
   return (
     <>
       <button
-        className={`chat-launcher ${blinking ? "blinking" : ""} ${waving ? "waving" : ""}`}
+        className={`chat-launcher state-${mascotState} ${blinking ? "blinking" : ""} ${waving ? "waving" : ""}`}
         id="chatLauncher"
         type="button"
         aria-label="Abrir chat de ayuda"
         aria-expanded={open}
         onClick={() => (open ? closeChat() : openChat())}
       >
-        <svg className="mascot-svg" viewBox="0 0 64 74" aria-hidden="true">
+        <svg className="mascot-svg" viewBox="0 0 72 84" aria-hidden="true">
           <defs>
             {/* Metal dorado: luz arriba-izquierda, sombra abajo-derecha -- da volumen sin ser 3D real. */}
             <linearGradient id="mascotGradMetal" x1="0%" y1="0%" x2="35%" y2="100%">
@@ -210,66 +243,75 @@ export function ChatWidget() {
               <stop offset="45%" stopColor="#C6A15B" />
               <stop offset="100%" stopColor="#8E7642" />
             </linearGradient>
-            {/* Visor: acento teal, como una luz encendida */}
-            <radialGradient id="mascotGradVisor" cx="35%" cy="35%" r="75%">
+            {/* Ojos: acento teal, como una luz encendida */}
+            <radialGradient id="mascotGradVisor" cx="35%" cy="30%" r="75%">
               <stop offset="0%" stopColor="#5C8B7C" />
               <stop offset="55%" stopColor="#3C5C55" />
               <stop offset="100%" stopColor="#213B35" />
             </radialGradient>
-            {/* Articulaciones (hombros, cuello, cintura): remaches oscuros con un pequeno brillo */}
+            {/* Articulaciones (hombros, cuello): remaches oscuros con un pequeno brillo */}
             <radialGradient id="mascotGradJoint" cx="35%" cy="30%" r="70%">
               <stop offset="0%" stopColor="#8E7642" />
               <stop offset="60%" stopColor="#3A2F22" />
               <stop offset="100%" stopColor="#15120E" />
             </radialGradient>
+            {/* Resplandor suave detras de la cabeza, para dar sensacion de volumen "premium" */}
+            <radialGradient id="mascotGradGlow" cx="50%" cy="45%" r="55%">
+              <stop offset="0%" stopColor="#D6B36E" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#D6B36E" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
+          {/* Resplandor de fondo */}
+          <ellipse cx="36" cy="28" rx="24" ry="20" fill="url(#mascotGradGlow)" />
+
           {/* Antena */}
-          <line x1="32" y1="10" x2="32" y2="4" stroke="url(#mascotGradMetal)" strokeWidth="1.6" strokeLinecap="round" />
-          <rect
-            className="mascot-antenna-dot"
-            x="30.5" y="1.5" width="3" height="3"
-            transform="rotate(45 32 3)"
-            fill="url(#mascotGradMetal)"
-          />
+          <line x1="36" y1="10" x2="36" y2="4" stroke="url(#mascotGradMetal)" strokeWidth="1.8" strokeLinecap="round" />
+          <circle className="mascot-antenna-dot" cx="36" cy="3" r="2" fill="url(#mascotGradMetal)" />
 
-          {/* Cabeza: octogono con volumen metalico */}
-          <polygon
-            points="22,10 42,10 50,18 50,30 42,38 22,38 14,30 14,18"
-            fill="url(#mascotGradMetal)" stroke="#8E7642" strokeWidth="1.2"
-          />
+          {/* Cabeza: redondeada, no angular */}
+          <rect x="14" y="8" width="44" height="40" rx="20" ry="20" fill="url(#mascotGradMetal)" />
 
-          {/* Visor (ojos): ranura con brillo teal, parpadea */}
-          <rect className="mascot-eye" x="20" y="20" width="24" height="8" rx="2" fill="url(#mascotGradVisor)" stroke="#213B35" strokeWidth="1" />
-          <ellipse cx="26" cy="22.5" rx="2.2" ry="1.1" fill="#EAF2EE" opacity="0.5" />
+          {/* Ojos grandes (estado por defecto): parpadean, se abren mas al "escuchar",
+              miran hacia arriba al "pensar" */}
+          <ellipse className="mascot-eye-main" cx="27" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" />
+          <ellipse className="mascot-eye-main" cx="45" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" />
+          <ellipse cx="25.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
+          <ellipse cx="43.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
+
+          {/* Ojos entornados y sonrientes (solo despedida) */}
+          <path className="mascot-eye-arc" d="M22 27 Q27 21 32 27" stroke="url(#mascotGradMetal)" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+          <path className="mascot-eye-arc" d="M40 27 Q45 21 50 27" stroke="url(#mascotGradMetal)" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+
+          {/* Boca: sonrisa que crece/encoge segun el estado */}
+          <path className="mascot-mouth-line" d="M28 40 Q36 45 44 40" stroke="url(#mascotGradMetal)" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+          {/* Boca pensativa: raya pequena (solo pensativo) */}
+          <rect className="mascot-mouth-dash" x="32" y="40.5" width="8" height="2.2" rx="1.1" fill="url(#mascotGradJoint)" />
+
+          {/* Puntos de "pensando" (solo pensativo) */}
+          <circle className="mascot-think-dot mascot-think-dot-1" cx="60" cy="16" r="2" fill="url(#mascotGradMetal)" />
+          <circle className="mascot-think-dot mascot-think-dot-2" cx="55" cy="9" r="1.6" fill="url(#mascotGradMetal)" />
+          <circle className="mascot-think-dot mascot-think-dot-3" cx="63" cy="6" r="1.2" fill="url(#mascotGradMetal)" />
 
           {/* Cuello: articulacion */}
-          <circle cx="32" cy="42" r="4" fill="url(#mascotGradJoint)" stroke="#100D09" strokeWidth="0.8" />
+          <rect x="30" y="48" width="12" height="6" rx="3" fill="url(#mascotGradJoint)" />
 
-          {/* Cuerpo: hexagono con volumen metalico */}
-          <polygon
-            points="18,46 46,46 50,54 46,64 18,64 14,54"
-            fill="url(#mascotGradMetal)" stroke="#8E7642" strokeWidth="1.2"
-          />
-          {/* Linea de panel, detalle de superficie mecanica */}
-          <path d="M22 50 L42 50" stroke="#100D09" strokeWidth="1" strokeLinecap="round" opacity="0.5" fill="none" />
+          {/* Cuerpo: compacto y redondeado */}
+          <rect x="18" y="52" width="36" height="28" rx="16" ry="16" fill="url(#mascotGradMetal)" />
+          {/* Lucecita de pecho: acento teal */}
+          <circle cx="36" cy="64" r="3" fill="url(#mascotGradVisor)" opacity="0.9" />
 
           {/* Hombros: articulaciones */}
-          <circle cx="14" cy="49" r="3.5" fill="url(#mascotGradJoint)" stroke="#100D09" strokeWidth="0.7" />
-          <circle cx="50" cy="49" r="3.5" fill="url(#mascotGradJoint)" stroke="#100D09" strokeWidth="0.7" />
+          <circle cx="18" cy="58" r="4" fill="url(#mascotGradJoint)" />
+          <circle cx="54" cy="58" r="4" fill="url(#mascotGradJoint)" />
 
-          {/* Brazo izquierdo, fijo, quebrado en angulo */}
-          <path d="M14 49 6 51 4 60" stroke="url(#mascotGradMetal)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
-          {/* Brazo derecho, saluda */}
-          <path className="mascot-arm-wave" d="M50 49 58 51 60 60" stroke="url(#mascotGradMetal)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
+          {/* Brazo izquierdo: fijo salvo en la despedida (se levanta junto al derecho) */}
+          <path className="mascot-arm-left" d="M18 58 10 62 8 72" stroke="url(#mascotGradMetal)" strokeWidth="4.2" strokeLinecap="round" fill="none" />
+          {/* Brazo derecho: saluda, senala al explicar, se acerca a la cabeza al pensar */}
+          <path className="mascot-arm-right" d="M54 58 62 62 64 72" stroke="url(#mascotGradMetal)" strokeWidth="4.2" strokeLinecap="round" fill="none" />
 
-          {/* Cintura / cadera: articulaciones */}
-          <circle cx="24" cy="64" r="3" fill="url(#mascotGradJoint)" stroke="#100D09" strokeWidth="0.6" />
-          <circle cx="40" cy="64" r="3" fill="url(#mascotGradJoint)" stroke="#100D09" strokeWidth="0.6" />
-
-          {/* Piernas */}
-          <path d="M24 64 21 71" stroke="url(#mascotGradMetal)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
-          <path d="M40 64 43 71" stroke="url(#mascotGradMetal)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
+          {/* Base / pies, simple y redondeada */}
+          <rect x="24" y="80" width="24" height="4" rx="2" fill="url(#mascotGradJoint)" />
         </svg>
       </button>
 
