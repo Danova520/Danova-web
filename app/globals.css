@@ -647,10 +647,19 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   76%{translate:3px -8px;}
   90%{translate:-3px -2px;}
 }
+/* Sin fondo circular: el robot es la unica forma visible. El boton se queda
+   transparente y del tamano justo del SVG, pero conserva el mismo ancho y
+   alto que antes (56px / 52px en movil) para que el area clicable no
+   encoja aunque el dibujo no la rellene entera. */
 .chat-launcher{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  border-radius:0;
   animation:mascotBreathe 3s ease-in-out infinite, mascotWander 17s ease-in-out infinite;
 }
 .chat-launcher:hover{
+  background:transparent;
   /* En hover se queda quieta para que se note el propio efecto de hover
      (translateY + scale) definido en la seccion CHAT WIDGET. */
   animation:mascotWander 17s ease-in-out infinite paused;
@@ -660,7 +669,13 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
    ganar a la regla existente ".chat-launcher svg" (clase + etiqueta) de la
    seccion CHAT WIDGET, que si no, gana por tener mas especificidad aunque
    esta regla este mas abajo en el archivo. */
-.chat-launcher .mascot-svg{width:34px; height:34px;}
+.chat-launcher .mascot-svg{
+  width:34px; height:34px;
+  /* Ya no hay circulo de fondo que separe el robot del contenido de la
+     pagina -- esta sombra hace que se distinga igual sobre fondos oscuros
+     y claros del sitio. */
+  filter:drop-shadow(0 2px 5px rgba(0,0,0,0.55)) drop-shadow(0 0 1px rgba(0,0,0,0.45));
+}
 @media(max-width:600px){
   .chat-launcher .mascot-svg{width:30px; height:30px;}
 }
@@ -675,7 +690,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
 }
 .chat-launcher.blinking .mascot-eye{animation:mascotBlink 0.22s ease-in-out;}
 
-.mascot-arm-wave{transform-origin:24.5px 27.5px;}
+.mascot-arm-wave{transform-origin:27px 25.5px;}
 @keyframes mascotWave{
   0%, 100%{transform:rotate(0deg);}
   25%{transform:rotate(-28deg);}

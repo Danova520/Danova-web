@@ -193,30 +193,37 @@ export function ChatWidget() {
         aria-expanded={open}
         onClick={() => (open ? closeChat() : openChat())}
       >
-        <svg className="mascot-svg" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <svg className="mascot-svg" viewBox="0 0 36 40" fill="none" aria-hidden="true">
           {/* Antena */}
-          <line x1="18" y1="8" x2="18" y2="4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-          <circle className="mascot-antenna-dot" cx="18" cy="3" r="1.4" fill="currentColor" stroke="none" />
+          <line x1="18" y1="6" x2="18" y2="2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          <rect
+            className="mascot-antenna-dot"
+            x="16.9" y="0.5" width="2.2" height="2.2"
+            transform="rotate(45 18 1.6)"
+            fill="currentColor" stroke="none"
+          />
 
-          {/* Cabeza */}
-          <rect x="9" y="8" width="18" height="14" rx="6" stroke="currentColor" strokeWidth="1.5" />
+          {/* Cabeza: octogono, angular en vez de redondeado */}
+          <polygon points="12,6 24,6 28,10 28,16 24,20 12,20 8,16 8,10" stroke="currentColor" strokeWidth="1.5" />
 
-          {/* Ojos (parpadean) */}
-          <rect className="mascot-eye" x="13.2" y="13" width="2.6" height="4.2" rx="1.3" fill="currentColor" stroke="none" />
-          <rect className="mascot-eye" x="20.2" y="13" width="2.6" height="4.2" rx="1.3" fill="currentColor" stroke="none" />
+          {/* Visor (ojos), una sola ranura en vez de dos puntos redondos; parpadea */}
+          <rect className="mascot-eye" x="12.5" y="11.5" width="11" height="3.6" stroke="currentColor" strokeWidth="1.3" />
 
-          {/* Sonrisa */}
-          <path d="M14.5 18.6q3.5 2.2 7 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+          {/* Cuello */}
+          <rect x="15" y="20" width="6" height="2.5" stroke="currentColor" strokeWidth="1.3" />
 
-          {/* Cuerpo */}
-          <rect x="11.5" y="24" width="13" height="7.5" rx="3.2" stroke="currentColor" strokeWidth="1.5" />
+          {/* Cuerpo: rectangulo con base angular */}
+          <polygon points="9,22.5 27,22.5 27,30 23.5,34 12.5,34 9,30" stroke="currentColor" strokeWidth="1.5" />
 
-          {/* Brazo izquierdo, fijo */}
-          <path d="M11.5 27.5 6.5 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          {/* Brazo izquierdo, fijo, quebrado en angulo */}
+          <path d="M9 25.5 4 25.5 3 30.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
           {/* Brazo derecho, saluda */}
-          <path className="mascot-arm-wave" d="M24.5 27.5 29.5 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path className="mascot-arm-wave" d="M27 25.5 32 25.5 33 30.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+
+          {/* Piernas / base, en angulo */}
+          <path d="M13.5 34 12.5 39 9.5 39" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+          <path d="M22.5 34 23.5 39 26.5 39" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
         </svg>
-        <span className="chat-dot"></span>
       </button>
 
       {mascotTipId && MASCOT_SECTIONS[mascotTipId] && !open && (
