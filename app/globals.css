@@ -647,11 +647,12 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   76%{translate:3px -8px;}
   90%{translate:-3px -2px;}
 }
-/* Sin fondo circular: el robot es la unica forma visible. El boton se queda
-   transparente y del tamano justo del SVG, pero conserva el mismo ancho y
-   alto que antes (56px / 52px en movil) para que el area clicable no
-   encoja aunque el dibujo no la rellene entera. */
+/* Sin fondo circular: el robot es la unica forma visible. El boton crece
+   para dar mas protagonismo al robot (80px / 62px en movil, antes 56/52),
+   pero como "bottom"/"right" no cambian, solo crece hacia arriba -- el
+   hueco con el boton de WhatsApp de debajo se mantiene igual de seguro. */
 .chat-launcher{
+  width:80px; height:80px;
   background:transparent;
   border:none;
   box-shadow:none;
@@ -664,20 +665,23 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
      (translateY + scale) definido en la seccion CHAT WIDGET. */
   animation:mascotWander 17s ease-in-out infinite paused;
 }
+@media(max-width:600px){
+  .chat-launcher{width:62px; height:62px;}
+}
 
 /* Especificidad ".chat-launcher .mascot-svg" (2 clases) a proposito: debe
    ganar a la regla existente ".chat-launcher svg" (clase + etiqueta) de la
    seccion CHAT WIDGET, que si no, gana por tener mas especificidad aunque
    esta regla este mas abajo en el archivo. */
 .chat-launcher .mascot-svg{
-  width:34px; height:34px;
+  width:80px; height:80px;
   /* Ya no hay circulo de fondo que separe el robot del contenido de la
      pagina -- esta sombra hace que se distinga igual sobre fondos oscuros
-     y claros del sitio. */
-  filter:drop-shadow(0 2px 5px rgba(0,0,0,0.55)) drop-shadow(0 0 1px rgba(0,0,0,0.45));
+     y claros del sitio, y refuerza que "flota" con profundidad. */
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,0.5)) drop-shadow(0 1px 3px rgba(0,0,0,0.45));
 }
 @media(max-width:600px){
-  .chat-launcher .mascot-svg{width:30px; height:30px;}
+  .chat-launcher .mascot-svg{width:62px; height:62px;}
 }
 
 .mascot-antenna-dot{animation:mascotAntennaPulse 3.4s ease-in-out infinite;}
@@ -690,7 +694,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
 }
 .chat-launcher.blinking .mascot-eye{animation:mascotBlink 0.22s ease-in-out;}
 
-.mascot-arm-wave{transform-origin:27px 25.5px;}
+.mascot-arm-wave{transform-origin:50px 49px;}
 @keyframes mascotWave{
   0%, 100%{transform:rotate(0deg);}
   25%{transform:rotate(-28deg);}
@@ -802,6 +806,11 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   }
   body{padding-bottom:64px;}
   .whatsapp-float{bottom:84px;}
-  .chat-launcher{bottom:152px;}
+  /* Mas arriba que antes (152px): en moviles de poca altura (~812px o menos)
+     casi no hay hueco libre entre los CTA del Hero y WhatsApp -- cualquier
+     valor intermedio pisa alguno de los dos. Se sube lo suficiente para
+     despejar ambos botones del Hero por completo (y de paso queda con mucho
+     mas margen sobre WhatsApp que antes). */
+  .chat-launcher{bottom:236px;}
   .chat-panel{bottom:218px;}
 }
