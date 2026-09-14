@@ -257,9 +257,17 @@ export function ChatWidget() {
             </radialGradient>
             {/* Resplandor suave detras de la cabeza, para dar sensacion de volumen "premium" */}
             <radialGradient id="mascotGradGlow" cx="50%" cy="45%" r="55%">
-              <stop offset="0%" stopColor="#D6B36E" stopOpacity="0.55" />
+              <stop offset="0%" stopColor="#D6B36E" stopOpacity="0.4" />
               <stop offset="100%" stopColor="#D6B36E" stopOpacity="0" />
             </radialGradient>
+            {/* Cuerpo principal: negro/gris muy oscuro (--ink/--bg), con un
+                matiz calido tenue en la zona de luz para dar volumen sin
+                que el dorado domine el color del robot. */}
+            <linearGradient id="mascotGradBody" x1="0%" y1="0%" x2="35%" y2="100%">
+              <stop offset="0%" stopColor="#3A2F22" />
+              <stop offset="40%" stopColor="#1B1611" />
+              <stop offset="100%" stopColor="#15120E" />
+            </linearGradient>
           </defs>
 
           {/* Resplandor de fondo */}
@@ -269,13 +277,14 @@ export function ChatWidget() {
           <line x1="36" y1="10" x2="36" y2="4" stroke="url(#mascotGradMetal)" strokeWidth="1.8" strokeLinecap="round" />
           <circle className="mascot-antenna-dot" cx="36" cy="3" r="2" fill="url(#mascotGradMetal)" />
 
-          {/* Cabeza: redondeada, no angular */}
-          <rect x="14" y="8" width="44" height="40" rx="20" ry="20" fill="url(#mascotGradMetal)" />
+          {/* Cabeza: redondeada, no angular. Relleno negro con volumen; el
+              dorado queda solo en el contorno, como un filo de luz. */}
+          <rect x="14" y="8" width="44" height="40" rx="20" ry="20" fill="url(#mascotGradBody)" stroke="url(#mascotGradMetal)" strokeWidth="1.2" />
 
           {/* Ojos grandes (estado por defecto): parpadean, se abren mas al "escuchar",
               miran hacia arriba al "pensar" */}
-          <ellipse className="mascot-eye-main" cx="27" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" />
-          <ellipse className="mascot-eye-main" cx="45" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" />
+          <ellipse className="mascot-eye-main" cx="27" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" stroke="url(#mascotGradMetal)" strokeWidth="1" />
+          <ellipse className="mascot-eye-main" cx="45" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" stroke="url(#mascotGradMetal)" strokeWidth="1" />
           <ellipse cx="25.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
           <ellipse cx="43.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
 
@@ -296,8 +305,8 @@ export function ChatWidget() {
           {/* Cuello: articulacion */}
           <rect x="30" y="48" width="12" height="6" rx="3" fill="url(#mascotGradJoint)" />
 
-          {/* Cuerpo: compacto y redondeado */}
-          <rect x="18" y="52" width="36" height="28" rx="16" ry="16" fill="url(#mascotGradMetal)" />
+          {/* Cuerpo: compacto y redondeado, mismo tratamiento negro + filo dorado que la cabeza */}
+          <rect x="18" y="52" width="36" height="28" rx="16" ry="16" fill="url(#mascotGradBody)" stroke="url(#mascotGradMetal)" strokeWidth="1.2" />
           {/* Lucecita de pecho: acento teal */}
           <circle cx="36" cy="64" r="3" fill="url(#mascotGradVisor)" opacity="0.9" />
 
