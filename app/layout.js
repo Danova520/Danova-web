@@ -1,5 +1,6 @@
 import { fraunces, inter, ibmPlexMono } from "@/lib/fonts";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
