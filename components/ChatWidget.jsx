@@ -235,92 +235,69 @@ export function ChatWidget() {
         aria-expanded={open}
         onClick={() => (open ? closeChat() : openChat())}
       >
-        <svg className="mascot-svg" viewBox="0 0 72 84" aria-hidden="true">
+        <svg className="mascot-svg" viewBox="0 0 84 84" aria-hidden="true">
           <defs>
-            {/* Metal dorado: luz arriba-izquierda, sombra abajo-derecha -- da volumen sin ser 3D real. */}
-            <linearGradient id="mascotGradMetal" x1="0%" y1="0%" x2="35%" y2="100%">
-              <stop offset="0%" stopColor="#D6B36E" />
-              <stop offset="45%" stopColor="#C6A15B" />
-              <stop offset="100%" stopColor="#8E7642" />
-            </linearGradient>
-            {/* Ojos: acento teal, como una luz encendida */}
-            <radialGradient id="mascotGradVisor" cx="35%" cy="30%" r="75%">
-              <stop offset="0%" stopColor="#5C8B7C" />
-              <stop offset="55%" stopColor="#3C5C55" />
-              <stop offset="100%" stopColor="#213B35" />
-            </radialGradient>
-            {/* Articulaciones (hombros, cuello): remaches oscuros con un pequeno brillo */}
-            <radialGradient id="mascotGradJoint" cx="35%" cy="30%" r="70%">
-              <stop offset="0%" stopColor="#8E7642" />
-              <stop offset="60%" stopColor="#3A2F22" />
-              <stop offset="100%" stopColor="#15120E" />
-            </radialGradient>
-            {/* Resplandor suave detras de la cabeza, para dar sensacion de volumen "premium" */}
-            <radialGradient id="mascotGradGlow" cx="50%" cy="45%" r="55%">
-              <stop offset="0%" stopColor="#D6B36E" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#D6B36E" stopOpacity="0" />
-            </radialGradient>
-            {/* Cuerpo principal: negro/gris muy oscuro (--ink/--bg), con un
-                matiz calido tenue en la zona de luz para dar volumen sin
-                que el dorado domine el color del robot. */}
-            <linearGradient id="mascotGradBody" x1="0%" y1="0%" x2="35%" y2="100%">
+            {/* Casco de la nave: negro/gris muy oscuro (--ink/--bg), con un
+                matiz calido tenue en la zona de luz para dar volumen. */}
+            <linearGradient id="mascotGradHull" x1="10%" y1="0%" x2="60%" y2="100%">
               <stop offset="0%" stopColor="#3A2F22" />
               <stop offset="40%" stopColor="#1B1611" />
               <stop offset="100%" stopColor="#15120E" />
             </linearGradient>
+            {/* Cabina: acento teal, como una luz encendida -- equivalente a los "ojos" */}
+            <radialGradient id="mascotGradCabin" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stopColor="#5C8B7C" />
+              <stop offset="55%" stopColor="#3C5C55" />
+              <stop offset="100%" stopColor="#213B35" />
+            </radialGradient>
+            {/* Estela del propulsor: brillo calido que se atenua hacia fuera */}
+            <radialGradient id="mascotGradThruster" cx="50%" cy="0%" r="90%">
+              <stop offset="0%" stopColor="#F0DBA6" />
+              <stop offset="55%" stopColor="#C6A15B" />
+              <stop offset="100%" stopColor="#C6A15B" stopOpacity="0" />
+            </radialGradient>
+            {/* Resplandor suave detras del conjunto, para dar sensacion de volumen "premium" */}
+            <radialGradient id="mascotGradGlow" cx="50%" cy="50%" r="55%">
+              <stop offset="0%" stopColor="#D6B36E" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#D6B36E" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
           {/* Resplandor de fondo */}
-          <ellipse cx="36" cy="28" rx="24" ry="20" fill="url(#mascotGradGlow)" />
+          <ellipse cx="42" cy="42" rx="28" ry="26" fill="url(#mascotGradGlow)" />
 
-          {/* Antena */}
-          <line x1="36" y1="10" x2="36" y2="4" stroke="url(#mascotGradMetal)" strokeWidth="1.8" strokeLinecap="round" />
-          <circle className="mascot-antenna-dot" cx="36" cy="3" r="2" fill="url(#mascotGradMetal)" />
+          {/* Anillo orbital punteado, mismo lenguaje visual que el logo (OrbitMark) */}
+          <circle className="mascot-ring" cx="42" cy="42" r="32" fill="none" stroke="#C6A15B" strokeWidth="1.1" strokeDasharray="2 5" />
+          {/* Estrella distante, igual que el punto del logo */}
+          <circle className="mascot-star" cx="42" cy="10" r="2.4" fill="#C6A15B" />
 
-          {/* Cabeza: redondeada, no angular. Relleno negro con volumen; el
-              dorado queda solo en el contorno, como un filo de luz. */}
-          <rect x="14" y="8" width="44" height="40" rx="20" ry="20" fill="url(#mascotGradBody)" stroke="url(#mascotGradMetal)" strokeWidth="1.2" />
+          {/* Particulas que orbitan mas rapido (solo pensativo, "procesando") */}
+          <g className="mascot-particles">
+            <circle cx="70" cy="46" r="1.8" fill="#C6A15B" />
+            <circle cx="14" cy="38" r="1.6" fill="#C6A15B" />
+            <circle cx="50" cy="12" r="1.3" fill="#C6A15B" />
+          </g>
 
-          {/* Ojos grandes (estado por defecto): parpadean, se abren mas al "escuchar",
-              miran hacia arriba al "pensar" */}
-          <ellipse className="mascot-eye-main" cx="27" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" stroke="url(#mascotGradMetal)" strokeWidth="1" />
-          <ellipse className="mascot-eye-main" cx="45" cy="27" rx="5" ry="6" fill="url(#mascotGradVisor)" stroke="url(#mascotGradMetal)" strokeWidth="1" />
-          <ellipse cx="25.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
-          <ellipse cx="43.3" cy="24.5" rx="1.3" ry="1.6" fill="#EAF2EE" opacity="0.6" />
-
-          {/* Ojos entornados y sonrientes (solo despedida) */}
-          <path className="mascot-eye-arc" d="M22 27 Q27 21 32 27" stroke="url(#mascotGradMetal)" strokeWidth="2.4" strokeLinecap="round" fill="none" />
-          <path className="mascot-eye-arc" d="M40 27 Q45 21 50 27" stroke="url(#mascotGradMetal)" strokeWidth="2.4" strokeLinecap="round" fill="none" />
-
-          {/* Boca: sonrisa que crece/encoge segun el estado */}
-          <path className="mascot-mouth-line" d="M28 40 Q36 45 44 40" stroke="url(#mascotGradMetal)" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-          {/* Boca pensativa: raya pequena (solo pensativo) */}
-          <rect className="mascot-mouth-dash" x="32" y="40.5" width="8" height="2.2" rx="1.1" fill="url(#mascotGradJoint)" />
-
-          {/* Puntos de "pensando" (solo pensativo) */}
-          <circle className="mascot-think-dot mascot-think-dot-1" cx="60" cy="16" r="2" fill="url(#mascotGradMetal)" />
-          <circle className="mascot-think-dot mascot-think-dot-2" cx="55" cy="9" r="1.6" fill="url(#mascotGradMetal)" />
-          <circle className="mascot-think-dot mascot-think-dot-3" cx="63" cy="6" r="1.2" fill="url(#mascotGradMetal)" />
-
-          {/* Cuello: articulacion */}
-          <rect x="30" y="48" width="12" height="6" rx="3" fill="url(#mascotGradJoint)" />
-
-          {/* Cuerpo: compacto y redondeado, mismo tratamiento negro + filo dorado que la cabeza */}
-          <rect x="18" y="52" width="36" height="28" rx="16" ry="16" fill="url(#mascotGradBody)" stroke="url(#mascotGradMetal)" strokeWidth="1.2" />
-          {/* Lucecita de pecho: acento teal */}
-          <circle cx="36" cy="64" r="3" fill="url(#mascotGradVisor)" opacity="0.9" />
-
-          {/* Hombros: articulaciones */}
-          <circle cx="18" cy="58" r="4" fill="url(#mascotGradJoint)" />
-          <circle cx="54" cy="58" r="4" fill="url(#mascotGradJoint)" />
-
-          {/* Brazo izquierdo: fijo salvo en la despedida (se levanta junto al derecho) */}
-          <path className="mascot-arm-left" d="M18 58 10 62 8 72" stroke="url(#mascotGradMetal)" strokeWidth="4.2" strokeLinecap="round" fill="none" />
-          {/* Brazo derecho: saluda, senala al explicar, se acerca a la cabeza al pensar */}
-          <path className="mascot-arm-right" d="M54 58 62 62 64 72" stroke="url(#mascotGradMetal)" strokeWidth="4.2" strokeLinecap="round" fill="none" />
-
-          {/* Base / pies, simple y redondeada */}
-          <rect x="24" y="80" width="24" height="4" rx="2" fill="url(#mascotGradJoint)" />
+          {/* La nave: casco redondeado tipo mascota, no militar */}
+          <g className="mascot-ship">
+            {/* Casco */}
+            <path
+              d="M42 20 C49 25 52 33 49 42 C48 47 46 50 42 52 C38 50 36 47 35 42 C32 33 35 25 42 20 Z"
+              fill="url(#mascotGradHull)" stroke="#C6A15B" strokeWidth="1.1"
+            />
+            {/* Estela del propulsor, en la cola */}
+            <path className="mascot-thruster" d="M37 53 Q42 64 47 53 Q42 59 37 53 Z" fill="url(#mascotGradThruster)" />
+            {/* Aletas, detalle dorado */}
+            <path d="M35 44 34 53 39 48Z" fill="#C6A15B" />
+            <path d="M49 44 50 53 45 48Z" fill="#C6A15B" />
+            {/* Anillo del propulsor */}
+            <ellipse cx="42" cy="52.5" rx="6" ry="2" fill="#C6A15B" />
+            {/* Cabina/ventana: se ilumina segun el estado, como los "ojos" */}
+            <circle className="mascot-cabin" cx="42" cy="31" r="5" fill="url(#mascotGradCabin)" stroke="#C6A15B" strokeWidth="0.9" />
+            <ellipse cx="40.3" cy="29" rx="1.3" ry="1" fill="#EAF2EE" opacity="0.5" />
+            {/* Pulso que sale de la cabina al "explicar" */}
+            <circle className="mascot-explain-burst" cx="42" cy="31" r="5" fill="none" stroke="#C6A15B" strokeWidth="1.5" />
+          </g>
         </svg>
       </button>
 

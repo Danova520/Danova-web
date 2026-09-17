@@ -629,15 +629,13 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
 .chat-typing span:nth-child(3){animation-delay:0.3s;}
 @keyframes chatTyping{0%,60%,100%{opacity:0.3; transform:translateY(0);} 30%{opacity:1; transform:translateY(-3px);}}
 
-/* ---------- MASCOTA (icono del chat launcher) ---------- */
-/* Respiracion (translateY) y deambular por su rincon (translate) son dos
-   propiedades CSS distintas -- así corren a la vez sin pisarse. El deambular
-   solo usa desplazamientos hacia arriba/los lados, nunca hacia abajo, para
-   no acercarse nunca al boton de WhatsApp que queda justo debajo. */
-@keyframes mascotBreathe{
-  0%, 100%{transform:translateY(0);}
-  50%{transform:translateY(-4px);}
-}
+/* ---------- MASCOTA (icono del chat launcher): nave + anillo orbital ---------- */
+/* Deambular por su rincon (translate) sigue igual que antes: solo hacia
+   arriba/los lados, nunca hacia abajo, para no acercarse nunca al boton de
+   WhatsApp que queda justo debajo. La antigua "respiracion" del conjunto
+   desaparece: ahora quien flota es la nave (ver .mascot-ship), no el icono
+   entero, para que se sienta que vuela dentro del anillo en vez de moverse
+   con el. */
 @keyframes mascotWander{
   0%, 100%{translate:0 0;}
   12%{translate:5px -3px;}
@@ -647,18 +645,17 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   76%{translate:3px -8px;}
   90%{translate:-3px -2px;}
 }
-/* Sin fondo circular: el robot es la unica forma visible. El boton crece
-   para dar mas protagonismo al robot (84px / 64px en movil, antes 80/62),
-   pero como "bottom"/"right" no cambian en ningun breakpoint (tampoco en el
-   override de la barra CTA sticky), solo crece hacia arriba -- el hueco con
-   el boton de WhatsApp de debajo se mantiene igual de seguro que antes. */
+/* Sin fondo circular: la nave y el anillo son la unica forma visible. El
+   boton mantiene el mismo tamaño que ya tenia (84px / 64px en movil), y
+   como "bottom"/"right" no cambian en ningun breakpoint (tampoco en el
+   override de la barra CTA sticky), sigue sin solaparse con WhatsApp. */
 .chat-launcher{
   width:84px; height:84px;
   background:transparent;
   border:none;
   box-shadow:none;
   border-radius:0;
-  animation:mascotBreathe 3s ease-in-out infinite, mascotWander 17s ease-in-out infinite;
+  animation:mascotWander 17s ease-in-out infinite;
 }
 .chat-launcher:hover{
   background:transparent;
@@ -676,7 +673,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
    esta regla este mas abajo en el archivo. */
 .chat-launcher .mascot-svg{
   width:84px; height:84px;
-  /* Ya no hay circulo de fondo que separe el robot del contenido de la
+  /* Ya no hay circulo de fondo que separe la nave del contenido de la
      pagina -- esta sombra hace que se distinga igual sobre fondos oscuros
      y claros del sitio, y refuerza que "flota" con profundidad. */
   filter:drop-shadow(0 6px 10px rgba(0,0,0,0.5)) drop-shadow(0 1px 3px rgba(0,0,0,0.45));
@@ -685,73 +682,109 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   .chat-launcher .mascot-svg{width:64px; height:64px;}
 }
 
-.mascot-antenna-dot{animation:mascotAntennaPulse 3.4s ease-in-out infinite;}
-@keyframes mascotAntennaPulse{0%, 100%{opacity:0.55;} 50%{opacity:1;}}
+/* ---- Anillo orbital: mismo lenguaje visual que OrbitMark (spin/pulse ya
+   definidos en esa seccion), solo que aqui gira mucho mas despacio en
+   reposo. La estrella reutiliza el "pulse" del logo tal cual. ---- */
+.mascot-ring{
+  transform-box:fill-box; transform-origin:center;
+  animation:spin 28s linear infinite;
+}
+.chat-launcher.state-idle .mascot-ring{animation-duration:50s;}
+.chat-launcher.state-escucha .mascot-ring{animation-play-state:paused;}
+.mascot-star{animation:pulse 3.4s ease-in-out infinite;}
 
-/* ---- Expresiones: transiciones cortas entre estados sobre los MISMOS
+/* Particulas que orbitan rapido alrededor del anillo, solo mientras el bot
+   esta "pensando" (escribiendo la respuesta). */
+.mascot-particles{
+  opacity:0;
+  transform-box:fill-box; transform-origin:center;
+  transition:opacity .3s ease;
+}
+.chat-launcher.state-pensativo .mascot-particles{
+  opacity:1;
+  animation:spin 2.4s linear infinite;
+}
+
+/* ---- La nave: transiciones cortas entre estados sobre los MISMOS
    elementos (transform/opacity), para que el cambio se vea fluido en vez de
-   un salto entre dibujos distintos. ---- */
-.mascot-eye-main{
-  transform-box:fill-box; transform-origin:center;
-  transition:transform .3s ease, opacity .3s ease;
+   un salto entre dibujos distintos. La flotacion (translate) y la
+   inclinacion de estado (transform:rotate) son propiedades distintas, asi
+   que corren a la vez sin pisarse. ---- */
+@keyframes mascotShipBob{
+  0%, 100%{translate:0 0;}
+  50%{translate:0 -3px;}
 }
-.mascot-eye-arc{opacity:0; transition:opacity .3s ease;}
-.mascot-mouth-line{
+.mascot-ship{
   transform-box:fill-box; transform-origin:center;
-  transition:transform .3s ease, opacity .3s ease;
+  animation:mascotShipBob 3.2s ease-in-out infinite;
+  transition:transform .35s ease;
 }
-.mascot-mouth-dash{opacity:0; transition:opacity .3s ease;}
-.mascot-think-dot{opacity:0; transition:opacity .25s ease;}
-.mascot-arm-left{transform-origin:18px 58px; transition:transform .35s ease;}
-.mascot-arm-right{transform-origin:54px 58px; transition:transform .35s ease;}
 
-/* Parpadeo y saludo aleatorios (reposo/saludo, chat cerrado): solo se ven
-   mientras el estado es "idle" -- en el resto de estados esas mismas clases
+.chat-launcher.state-escucha .mascot-ship{transform:rotate(-9deg);}
+.chat-launcher.state-pensativo .mascot-ship{transform:rotate(6deg);}
+.chat-launcher.state-explica .mascot-ship{transform:rotate(11deg);}
+
+/* Despedida: se aleja un instante, con un ligero loop, y vuelve a su sitio. */
+@keyframes mascotDepart{
+  0%{transform:translateY(0) rotate(0deg);}
+  35%{transform:translateY(-10px) rotate(-14deg);}
+  65%{transform:translateY(-6px) rotate(9deg);}
+  100%{transform:translateY(0) rotate(0deg);}
+}
+.chat-launcher.state-despedida .mascot-ship{animation:mascotDepart 0.9s ease-in-out;}
+
+/* Parpadeo y saludo aleatorios (reposo, chat cerrado): solo se ven mientras
+   el estado es "idle" -- en el resto de estados esas mismas clases
    .blinking/.waving pueden seguir alternando en segundo plano sin efecto
-   visual, porque el selector exige tambien .state-idle. */
-@keyframes mascotBlink{
-  0%, 100%{transform:scaleY(1);}
-  50%{transform:scaleY(0.12);}
+   visual, porque el selector exige tambien .state-idle. Se reutilizan tal
+   cual: el "parpadeo" ahora es un destello breve de la cabina, y el
+   "saludo" es un pequeño vaiven de la nave. */
+@keyframes mascotCabinBlink{
+  0%, 100%{opacity:1;}
+  50%{opacity:0.3;}
 }
-.chat-launcher.state-idle.blinking .mascot-eye-main{animation:mascotBlink 0.22s ease-in-out;}
+.chat-launcher.state-idle.blinking .mascot-cabin{animation:mascotCabinBlink 0.22s ease-in-out;}
 
-@keyframes mascotWave{
+@keyframes mascotShipFlourish{
   0%, 100%{transform:rotate(0deg);}
-  25%{transform:rotate(-28deg);}
-  50%{transform:rotate(-8deg);}
-  75%{transform:rotate(-32deg);}
+  30%{transform:rotate(-10deg);}
+  60%{transform:rotate(7deg);}
 }
-.chat-launcher.state-idle.waving .mascot-arm-right{animation:mascotWave 0.9s ease-in-out;}
+.chat-launcher.state-idle.waving .mascot-ship{animation:mascotShipFlourish 0.9s ease-in-out;}
 
-/* Escucha: chat abierto, el usuario esta escribiendo -- ojos mas abiertos,
-   boca mas neutra/atenta. */
-.chat-launcher.state-escucha .mascot-eye-main{transform:scaleY(1.18);}
-.chat-launcher.state-escucha .mascot-mouth-line{transform:scaleY(0.6);}
+/* Cabina/ventana: la luz varia de intensidad segun el estado, como unos ojos. */
+.mascot-cabin{
+  transition:opacity .3s ease;
+  opacity:0.55;
+}
+@keyframes mascotCabinAttentive{0%, 100%{opacity:0.8;} 50%{opacity:1;}}
+.chat-launcher.state-escucha .mascot-cabin{animation:mascotCabinAttentive 1s ease-in-out infinite;}
+.chat-launcher.state-pensativo .mascot-cabin{opacity:0.85;}
+.chat-launcher.state-explica .mascot-cabin{opacity:1;}
+.chat-launcher.state-feliz .mascot-cabin{opacity:0.9;}
+.chat-launcher.state-despedida .mascot-cabin{opacity:1;}
 
-/* Pensativo: el bot esta "escribiendo" -- mirada arriba, boca pensativa,
-   mano cerca de la cabeza y puntos de "pensando". */
-.chat-launcher.state-pensativo .mascot-eye-main{transform:translateY(-2.5px);}
-.chat-launcher.state-pensativo .mascot-mouth-line{opacity:0;}
-.chat-launcher.state-pensativo .mascot-mouth-dash{opacity:1;}
-.chat-launcher.state-pensativo .mascot-arm-right{transform:rotate(-125deg);}
-.chat-launcher.state-pensativo .mascot-think-dot{opacity:0.85;}
-.chat-launcher.state-pensativo .mascot-think-dot-2{transition-delay:.08s;}
-.chat-launcher.state-pensativo .mascot-think-dot-3{transition-delay:.16s;}
+/* Pulso que sale de la cabina hacia fuera al "explicar", como un destello direccional. */
+.mascot-explain-burst{opacity:0; transform-box:fill-box; transform-origin:center;}
+@keyframes mascotExplainBurst{
+  0%{opacity:0.9; transform:scale(0.6);}
+  100%{opacity:0; transform:scale(2.4);}
+}
+.chat-launcher.state-explica .mascot-explain-burst{animation:mascotExplainBurst 1.6s ease-out;}
 
-/* Explica: acaba de llegar la respuesta -- brazo hacia fuera, boca "hablando". */
-.chat-launcher.state-explica .mascot-mouth-line{transform:scaleY(1.7) scaleX(0.85);}
-.chat-launcher.state-explica .mascot-arm-right{transform:rotate(35deg);}
-
-/* Feliz: chat abierto, estado neutro -- sonrisa amplia. */
-.chat-launcher.state-feliz .mascot-mouth-line{transform:scaleY(1.35);}
-
-/* Despedida: al cerrar el chat -- ojos entornados y sonrientes, los dos
-   brazos saludando. */
-.chat-launcher.state-despedida .mascot-eye-main{opacity:0;}
-.chat-launcher.state-despedida .mascot-eye-arc{opacity:1;}
-.chat-launcher.state-despedida .mascot-mouth-line{transform:scaleY(1.35);}
-.chat-launcher.state-despedida .mascot-arm-left{transform:rotate(-130deg);}
-.chat-launcher.state-despedida .mascot-arm-right{transform:rotate(130deg);}
+/* Estela del propulsor: parpadea suave en reposo, irregular al "pensar",
+   y se aviva al "explicar" y en la despedida. */
+.mascot-thruster{
+  transform-box:fill-box; transform-origin:center top;
+  transition:opacity .3s ease, transform .3s ease;
+  opacity:0.45;
+  animation:mascotThrusterFlicker 1.8s ease-in-out infinite;
+}
+@keyframes mascotThrusterFlicker{0%, 100%{opacity:0.35;} 50%{opacity:0.65;}}
+@keyframes mascotThrusterIrregular{0%{opacity:0.3;} 33%{opacity:0.8;} 66%{opacity:0.4;} 100%{opacity:0.9;}}
+.chat-launcher.state-pensativo .mascot-thruster{animation:mascotThrusterIrregular 0.6s steps(3) infinite;}
+.chat-launcher.state-explica .mascot-thruster{opacity:1; transform:scaleY(1.5);}
+.chat-launcher.state-despedida .mascot-thruster{opacity:1; transform:scaleY(1.8);}
 
 .mascot-tooltip{
   position:fixed; right:88px; bottom:96px; z-index:199;
