@@ -3,7 +3,7 @@ export default function sitemap() {
     {
       url: "https://danovacreators.com",
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 1,
     },
   ];

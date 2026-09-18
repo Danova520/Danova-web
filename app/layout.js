@@ -1,6 +1,7 @@
 import { fraunces, inter, ibmPlexMono } from "@/lib/fonts";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Analytics } from "@vercel/analytics/next";
+import { WA_DISPLAY, SOCIAL_LINKS } from "@/lib/constants";
 import "./globals.css";
 
 export const metadata = {
@@ -22,6 +23,14 @@ const organizationJsonLd = {
   description: "Agencia de marketing digital en Carballo, Galicia. Diseño web, SEO y redes sociales.",
   areaServed: "ES",
   email: "info@danovacreators.com",
+  telephone: WA_DISPLAY,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Carballo",
+    addressRegion: "A Coruña",
+    addressCountry: "ES",
+  },
+  sameAs: Object.values(SOCIAL_LINKS),
 };
 
 export default function RootLayout({ children }) {
