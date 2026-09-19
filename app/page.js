@@ -6,6 +6,7 @@ import { SystemSection } from "@/components/SystemSection";
 import { AudienceSection } from "@/components/AudienceSection";
 import { PackagesSection } from "@/components/PackagesSection";
 import { MaintenanceSection } from "@/components/MaintenanceSection";
+import { SocialSection } from "@/components/SocialSection";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ProcessSection } from "@/components/ProcessSection";
@@ -31,6 +32,7 @@ export default function Home() {
         <AudienceSection />
         <PackagesSection />
         <MaintenanceSection />
+        <SocialSection />
         <PortfolioSection />
         <TestimonialsSection />
         <ProcessSection />
