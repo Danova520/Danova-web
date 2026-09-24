@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { OrbitMark } from "@/components/OrbitMark";
 import { SOCIAL_LINKS } from "@/lib/constants";
@@ -12,8 +13,21 @@ const LINKS = [
   { href: "#contacto", key: "footer.contacto" },
 ];
 
+const SERVICE_LINKS = [
+  { href: "/servicios/diseno-web", key: "nav.svcWeb" },
+  { href: "/servicios/seo-local", key: "nav.svcSeo" },
+  { href: "/servicios/redes-sociales", key: "nav.svcSocial" },
+  { href: "/servicios/mantenimiento-web", key: "nav.svcMaint" },
+];
+
 export function Footer() {
   const { t } = useLanguage();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  function anchorHref(href) {
+    return isHome ? href : `/${href}`;
+  }
 
   return (
     <footer>
@@ -25,6 +39,11 @@ export function Footer() {
           </div>
           <div className="footer-links">
             {LINKS.map((link) => (
+              <a key={link.key} href={anchorHref(link.href)}>
+                {t(link.key)}
+              </a>
+            ))}
+            {SERVICE_LINKS.map((link) => (
               <a key={link.key} href={link.href}>
                 {t(link.key)}
               </a>

@@ -1,0 +1,23 @@
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { ServicePage } from "@/components/ServicePage";
+
+export const metadata = {
+  title: "Posicionamiento SEO Local en Galicia | DANOVA",
+  description:
+    "Mejora tu posicionamiento en Google y Google Maps en Carballo y Galicia. SEO local para negocios que quieren aparecer antes que su competencia.",
+};
+
+export default function SeoLocalPage() {
+  return (
+    <>
+      <Header />
+      <main>
+        <ServicePage prefix="svcSeo" />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
+    </>
+  );
+}
