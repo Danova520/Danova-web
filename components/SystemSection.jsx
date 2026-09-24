@@ -1,15 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
 const CYCLE = [1, 2, 3, 4, 5];
 
 const DISCIPLINES = [
-  { key: "sistema.d1", items: 6, link: true },
-  { key: "sistema.d2", items: 6, link: false },
-  { key: "sistema.d3", items: 6, link: false },
-  { key: "sistema.d4", items: 5, link: false },
+  { key: "sistema.d1", items: 6, href: "/servicios/diseno-web" },
+  { key: "sistema.d2", items: 6, href: "/servicios/seo-local" },
+  { key: "sistema.d3", items: 6, href: "/servicios/redes-sociales" },
+  { key: "sistema.d4", items: 5, href: null },
 ];
 
 function CycleWheel() {
@@ -36,13 +37,8 @@ function DisciplineCard({ disc, index }) {
   const { t } = useLanguage();
   const reveal = useReveal();
 
-  return (
-    <div
-      className={`discipline-card ${reveal.className}`}
-      data-reveal
-      ref={reveal.ref}
-      style={{ transitionDelay: `${index * 0.1}s` }}
-    >
+  const content = (
+    <>
       <span className="discipline-num">0{index + 1}</span>
       <h3>{t(`${disc.key}.title`)}</h3>
       <p>{t(`${disc.key}.desc`)}</p>
@@ -51,7 +47,34 @@ function DisciplineCard({ disc, index }) {
           <li key={n}>{t(`${disc.key}.li${n}`)}</li>
         ))}
       </ul>
-      {disc.link && <span className="discipline-link">{t(`${disc.key}.link`)}</span>}
+      {disc.href && <span className="discipline-link">{t("sistema.verMas")}</span>}
+    </>
+  );
+
+  const className = `discipline-card ${disc.href ? "is-link" : ""} ${reveal.className}`;
+
+  if (disc.href) {
+    return (
+      <Link
+        href={disc.href}
+        className={className}
+        data-reveal
+        ref={reveal.ref}
+        style={{ transitionDelay: `${index * 0.1}s` }}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className={className}
+      data-reveal
+      ref={reveal.ref}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+    >
+      {content}
     </div>
   );
 }
