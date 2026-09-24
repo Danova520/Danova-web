@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { ServicePage } from "@/components/ServicePage";
 import { SocialSection } from "@/components/SocialSection";
 
@@ -18,7 +18,7 @@ export default function RedesSocialesPage() {
         <ServicePage prefix="svcSocial" pricing={<SocialSection />} />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <StickyActionBar />
     </>
   );
 }

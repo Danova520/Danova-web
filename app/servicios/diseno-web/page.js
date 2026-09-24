@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { ServicePage } from "@/components/ServicePage";
 import { PackagesSection } from "@/components/PackagesSection";
 
@@ -18,7 +18,7 @@ export default function DisenoWebPage() {
         <ServicePage prefix="svcWeb" pricing={<PackagesSection />} />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <StickyActionBar />
     </>
   );
 }

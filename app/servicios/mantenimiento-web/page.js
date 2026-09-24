@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { ServicePage } from "@/components/ServicePage";
 import { MaintenanceSection } from "@/components/MaintenanceSection";
 
@@ -18,7 +18,7 @@ export default function MantenimientoWebPage() {
         <ServicePage prefix="svcMaint" pricing={<MaintenanceSection />} />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <StickyActionBar />
     </>
   );
 }

@@ -15,8 +15,7 @@ import { AboutSection } from "@/components/AboutSection";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { MobileStickyCta } from "@/components/MobileStickyCta";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { SmoothAnchorLinks } from "@/components/SmoothAnchorLinks";
 import { DeferredWidgets } from "@/components/DeferredWidgets";
 
@@ -44,8 +43,7 @@ export default function Home() {
       </main>
 
       <Footer />
-      <WhatsAppFloat />
-      <MobileStickyCta />
+      <StickyActionBar />
       <SmoothAnchorLinks />
       <DeferredWidgets />
     </>

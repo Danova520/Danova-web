@@ -616,25 +616,41 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
 
 :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
 
-/* ---------- WHATSAPP FLOTANTE ---------- */
-.whatsapp-float{
-  position:fixed; right:20px; bottom:20px; z-index:200;
-  width:56px; height:56px; border-radius:50%;
-  background:var(--gold); color:var(--ink);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 10px 28px rgba(0,0,0,0.4);
-  transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
+/* ---------- BARRA DE ACCION FIJA ---------- */
+/* Sustituye al antiguo icono circular de WhatsApp + CTA movil de una sola
+   tarjeta: ahora es una unica barra con dos botones, siempre visible en
+   movil Y escritorio (antes en escritorio no habia ninguna barra fija). */
+.sticky-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:150;
+  display:flex;
+  box-shadow:0 -6px 20px rgba(0,0,0,0.35);
 }
-.whatsapp-float:hover{transform:translateY(-3px) scale(1.05); background:#D6B36E; box-shadow:0 14px 32px rgba(0,0,0,0.45);}
-.whatsapp-float svg{width:26px; height:26px;}
-@media(max-width:600px){
-  .whatsapp-float{right:16px; bottom:16px; width:52px; height:52px;}
-  .whatsapp-float svg{width:24px; height:24px;}
+.sticky-bar a{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+  padding:14px 10px; padding-bottom:calc(14px + env(safe-area-inset-bottom));
+  background:var(--gold); color:var(--ink);
+  font-family:var(--mono); font-size:11.5px; letter-spacing:0.02em; text-transform:uppercase;
+  text-align:center; line-height:1.3;
+  transition:background .2s ease;
+}
+.sticky-bar a:hover{background:#D6B36E;}
+.sticky-bar a:first-child{border-right:1px solid rgba(27,22,17,0.18);}
+.sticky-bar .sticky-icon{width:15px; height:15px; flex-shrink:0;}
+body{padding-bottom:64px;}
+@media(min-width:900px){
+  .sticky-bar{
+    left:50%; right:auto; bottom:24px; transform:translateX(-50%);
+    border-radius:10px; overflow:hidden;
+    box-shadow:0 16px 40px rgba(0,0,0,0.4);
+  }
+  .sticky-bar a{flex:0 0 auto; padding:15px 30px; padding-bottom:15px; font-size:12.5px; white-space:nowrap;}
+  .sticky-bar .sticky-icon{width:17px; height:17px;}
+  body{padding-bottom:0;}
 }
 
 /* ---------- CHAT WIDGET ---------- */
 .chat-launcher{
-  position:fixed; right:20px; bottom:88px; z-index:200;
+  position:fixed; right:20px; bottom:100px; z-index:200;
   width:56px; height:56px; border-radius:50%;
   background:var(--bg-soft); color:var(--gold);
   border:1px solid var(--gold-dim);
@@ -649,11 +665,11 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   background:var(--gold); border:2px solid var(--bg);
 }
 @media(max-width:600px){
-  .chat-launcher{right:16px; bottom:80px; width:52px; height:52px;}
+  .chat-launcher{right:16px; width:52px; height:52px;}
 }
 
 .chat-panel{
-  position:fixed; right:20px; bottom:154px; z-index:201;
+  position:fixed; right:20px; bottom:194px; z-index:201;
   width:340px; max-width:calc(100vw - 32px);
   max-height:min(520px, 70vh);
   background:var(--bg-soft); border:1px solid var(--line-dark);
@@ -664,7 +680,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   transition:transform .25s ease, opacity .22s ease;
 }
 .chat-panel.open{transform:translateY(0) scale(1); opacity:1; pointer-events:auto;}
-@media(max-width:600px){.chat-panel{right:16px; bottom:140px;}}
+@media(max-width:600px){.chat-panel{right:16px;}}
 
 .chat-header{
   display:flex; align-items:center; justify-content:space-between;
@@ -971,24 +987,13 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
   .story-door .door-label{opacity:1; position:static; display:block; margin-top:6px; background:none; border:none; padding:0; text-align:center;}
 }
 
-/* ---------- CTA FIJO MOVIL ---------- */
-.mobile-sticky-cta{display:none;}
+/* ---------- MASCOTA: DESPEJE SOBRE LA BARRA FIJA EN MOVIL ---------- */
+/* En movil la barra queda pegada al borde inferior (bottom:0) en vez de
+   flotar a 24px como en escritorio, asi que el despeje se recalcula aqui.
+   El max-height del panel tambien se limita respecto al alto real del
+   viewport para que en moviles bajos (~640px o menos) no quede recortado
+   por arriba. */
 @media(max-width:899px){
-  .mobile-sticky-cta{
-    display:flex; align-items:center; justify-content:center;
-    position:fixed; left:0; right:0; bottom:0; z-index:150;
-    padding:16px 20px; padding-bottom:calc(16px + env(safe-area-inset-bottom));
-    background:var(--gold); color:var(--ink);
-    font-family:var(--mono); font-size:13px; letter-spacing:0.04em; text-transform:uppercase; text-align:center;
-    box-shadow:0 -6px 20px rgba(0,0,0,0.35);
-  }
-  body{padding-bottom:64px;}
-  .whatsapp-float{bottom:84px;}
-  /* Mas arriba que antes (152px): en moviles de poca altura (~812px o menos)
-     casi no hay hueco libre entre los CTA del Hero y WhatsApp -- cualquier
-     valor intermedio pisa alguno de los dos. Se sube lo suficiente para
-     despejar ambos botones del Hero por completo (y de paso queda con mucho
-     mas margen sobre WhatsApp que antes). */
-  .chat-launcher{bottom:236px;}
-  .chat-panel{bottom:218px;}
+  .chat-launcher{bottom:84px;}
+  .chat-panel{bottom:178px; max-height:min(520px, calc(100vh - 194px));}
 }

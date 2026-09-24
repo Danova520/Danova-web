@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { LocationPage } from "@/components/LocationPage";
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default function ACorunaPage() {
         <LocationPage prefix="locCoruna" />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <StickyActionBar />
     </>
   );
 }

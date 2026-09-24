@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { StickyActionBar } from "@/components/StickyActionBar";
 import { ServicePage } from "@/components/ServicePage";
 import { BrandingSection } from "@/components/BrandingSection";
 
@@ -18,7 +18,7 @@ export default function DisenoDeLogoPage() {
         <ServicePage prefix="svcBrand" pricing={<BrandingSection />} />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <StickyActionBar />
     </>
   );
 }
