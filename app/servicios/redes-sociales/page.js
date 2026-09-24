@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { ServicePage } from "@/components/ServicePage";
+import { SocialSection } from "@/components/SocialSection";
 
 export const metadata = {
   title: "Gestión de Redes Sociales en Galicia | DANOVA",
@@ -14,7 +15,7 @@ export default function RedesSocialesPage() {
     <>
       <Header />
       <main>
-        <ServicePage prefix="svcSocial" />
+        <ServicePage prefix="svcSocial" pricing={<SocialSection />} />
       </main>
       <Footer />
       <WhatsAppFloat />

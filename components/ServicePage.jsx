@@ -8,7 +8,7 @@ import { WA_LINK } from "@/lib/constants";
 const STEPS = [1, 2, 3, 4];
 const PHOTOS = [1, 2, 3];
 
-export function ServicePage({ prefix }) {
+export function ServicePage({ prefix, pricing }) {
   const { t } = useLanguage();
   const hero = useReveal();
   const what = useReveal();
@@ -59,6 +59,8 @@ export function ServicePage({ prefix }) {
           <p>{t(`${prefix}.whoP`)}</p>
         </div>
       </section>
+
+      {pricing}
 
       <section className="section-light">
         <div className="wrap">

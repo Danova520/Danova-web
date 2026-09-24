@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { ServicePage } from "@/components/ServicePage";
+import { MaintenanceSection } from "@/components/MaintenanceSection";
 
 export const metadata = {
   title: "Mantenimiento Web en Galicia | DANOVA",
@@ -14,7 +15,7 @@ export default function MantenimientoWebPage() {
     <>
       <Header />
       <main>
-        <ServicePage prefix="svcMaint" />
+        <ServicePage prefix="svcMaint" pricing={<MaintenanceSection />} />
       </main>
       <Footer />
       <WhatsAppFloat />

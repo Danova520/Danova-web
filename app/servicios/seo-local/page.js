@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { ServicePage } from "@/components/ServicePage";
+import { MaintenanceSection } from "@/components/MaintenanceSection";
 
 export const metadata = {
   title: "Posicionamiento SEO Local en Galicia | DANOVA",
@@ -14,7 +15,7 @@ export default function SeoLocalPage() {
     <>
       <Header />
       <main>
-        <ServicePage prefix="svcSeo" />
+        <ServicePage prefix="svcSeo" pricing={<MaintenanceSection />} />
       </main>
       <Footer />
       <WhatsAppFloat />

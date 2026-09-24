@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { ServicePage } from "@/components/ServicePage";
+import { PackagesSection } from "@/components/PackagesSection";
 
 export const metadata = {
   title: "Diseño Web en Carballo y Galicia | DANOVA",
@@ -14,7 +15,7 @@ export default function DisenoWebPage() {
     <>
       <Header />
       <main>
-        <ServicePage prefix="svcWeb" />
+        <ServicePage prefix="svcWeb" pricing={<PackagesSection />} />
       </main>
       <Footer />
       <WhatsAppFloat />
