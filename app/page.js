@@ -4,6 +4,7 @@ import { InstantProofStrip } from "@/components/InstantProofStrip";
 import { ProblemSection } from "@/components/ProblemSection";
 import { SystemSection } from "@/components/SystemSection";
 import { AudienceSection } from "@/components/AudienceSection";
+import { WhyUsSection } from "@/components/WhyUsSection";
 import { PackagesSection } from "@/components/PackagesSection";
 import { MaintenanceSection } from "@/components/MaintenanceSection";
 import { SocialSection } from "@/components/SocialSection";
@@ -30,6 +31,7 @@ export default function Home() {
         <ProblemSection />
         <SystemSection />
         <AudienceSection />
+        <WhyUsSection />
         <PackagesSection />
         <MaintenanceSection />
         <SocialSection />

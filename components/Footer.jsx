@@ -18,6 +18,7 @@ const SERVICE_LINKS = [
   { href: "/servicios/seo-local", key: "nav.svcSeo" },
   { href: "/servicios/redes-sociales", key: "nav.svcSocial" },
   { href: "/servicios/mantenimiento-web", key: "nav.svcMaint" },
+  { href: "/a-coruna", key: "nav.locCoruna" },
 ];
 
 export function Footer() {

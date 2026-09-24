@@ -13,6 +13,7 @@ export function Hero() {
           <div className="eyebrow">{t("hero.eyebrow")}</div>
           <h1 dangerouslySetInnerHTML={{ __html: t("hero.h1") }} />
           <p className="lede">{t("hero.lede")}</p>
+          <p className="hero-trust">{t("hero.trust")}</p>
           <div className="hero-ctas">
             <a href="#contacto" className="btn btn-primary">
               {t("hero.cta1")}
