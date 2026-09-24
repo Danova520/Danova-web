@@ -19,6 +19,7 @@ const SERVICE_LINKS = [
   { href: "/servicios/seo-local", key: "nav.svcSeo" },
   { href: "/servicios/redes-sociales", key: "nav.svcSocial" },
   { href: "/servicios/mantenimiento-web", key: "nav.svcMaint" },
+  { href: "/servicios/diseno-de-logo", key: "nav.svcBrand" },
 ];
 
 export function Header() {

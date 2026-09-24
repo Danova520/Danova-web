@@ -33,6 +33,12 @@ export default function sitemap() {
       priority: 0.8,
     },
     {
+      url: "https://danovacreators.com/servicios/diseno-de-logo",
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: "https://danovacreators.com/a-coruna",
       lastModified,
       changeFrequency: "monthly",
