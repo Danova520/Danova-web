@@ -651,6 +651,9 @@ body{padding-bottom:72px;}
     box-shadow:0 16px 40px rgba(0,0,0,0.4);
   }
   .sticky-bar .sticky-icon{width:17px; height:17px;}
+  .sticky-bar a:last-child{
+    transform:translateX(113px);
+  }
   body{padding-bottom:0;}
 }
 
