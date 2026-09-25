@@ -3,8 +3,24 @@
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
+import { translations } from "@/lib/translations";
 
 const QUESTIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+// Contenido en español fijo (no ligado al idioma seleccionado): el JSON-LD
+// describe el documento para buscadores/IA, que ven lang="es" en <html>.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: QUESTIONS.map((n) => ({
+    "@type": "Question",
+    name: translations[`faq.q${n}`].es,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: translations[`faq.a${n}`].es,
+    },
+  })),
+};
 
 export function FaqSection() {
   const { t } = useLanguage();
@@ -14,6 +30,10 @@ export function FaqSection() {
 
   return (
     <section id="faq">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div className="wrap">
         <div className={head.className} data-reveal ref={head.ref}>
           <div className="eyebrow">{t("faq.eyebrow")}</div>

@@ -1,0 +1,23 @@
+# DANOVA
+
+> Agencia de marketing digital en Carballo, Galicia, fundada por Dennis Alemán y Abel David Núñez. Diseño web, SEO local, redes sociales, mantenimiento web y diseño de logo/identidad de marca para negocios locales.
+
+DANOVA es una agencia de dos personas — sin intermediarios ni departamentos — que trabaja con negocios locales de Carballo, A Coruña y el resto de Galicia, tratando la web, Google y las redes sociales como un mismo sistema.
+
+## Servicios
+
+- [Diseño Web](https://danovacreators.com/servicios/diseno-web): Diseño y desarrollo de páginas web para negocios locales en Carballo y Galicia.
+- [SEO Local](https://danovacreators.com/servicios/seo-local): Posicionamiento en Google y Google Maps en Carballo y Galicia.
+- [Redes Sociales](https://danovacreators.com/servicios/redes-sociales): Gestión de Instagram, Facebook y TikTok para negocios locales.
+- [Mantenimiento Web](https://danovacreators.com/servicios/mantenimiento-web): Seguridad, copias de seguridad y actualizaciones de contenido tras el lanzamiento.
+- [Diseño de Logo e Identidad de Marca](https://danovacreators.com/servicios/diseno-de-logo): Diseño de logo a medida o paquete completo de identidad de marca (colores, tipografías, guía de uso).
+- [SEO Local en A Coruña](https://danovacreators.com/seo-local-a-coruna): Posicionamiento SEO local específico para negocios de A Coruña.
+
+## Ciudades
+
+- [A Coruña](https://danovacreators.com/a-coruna): Página específica para negocios de A Coruña y su comarca.
+
+## Enlaces
+
+- [Inicio](https://danovacreators.com)
+- [Sitemap](https://danovacreators.com/sitemap.xml)
