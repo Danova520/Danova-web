@@ -18,6 +18,7 @@ export function LocationPage({ prefix }) {
   const { t } = useLanguage();
   const hero = useReveal();
   const what = useReveal();
+  const trust = useReveal();
   const links = useReveal();
   const cta = useReveal();
 
@@ -37,6 +38,13 @@ export function LocationPage({ prefix }) {
         <div className={`wrap ${what.className}`} data-reveal ref={what.ref}>
           <h2>{t(`${prefix}.whatH2`)}</h2>
           <p>{t(`${prefix}.whatP`)}</p>
+        </div>
+      </section>
+
+      <section className="section-light">
+        <div className={`wrap ${trust.className}`} data-reveal ref={trust.ref}>
+          <h2>{t(`${prefix}.trustH2`)}</h2>
+          <p>{t(`${prefix}.trustP`)}</p>
         </div>
       </section>
 
