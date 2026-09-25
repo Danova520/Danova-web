@@ -14,7 +14,7 @@ export default function ACorunaPage() {
     <>
       <Header />
       <main>
-        <LocationPage prefix="locCoruna" />
+        <LocationPage prefix="locCoruna" serviceOverrides={{ "nav.svcSeo": "/seo-local-a-coruna" }} />
       </main>
       <Footer />
       <StickyActionBar />

@@ -14,7 +14,7 @@ const SERVICE_LINKS = [
   { href: "/servicios/diseno-de-logo", key: "nav.svcBrand" },
 ];
 
-export function LocationPage({ prefix }) {
+export function LocationPage({ prefix, serviceOverrides }) {
   const { t } = useLanguage();
   const hero = useReveal();
   const what = useReveal();
@@ -23,6 +23,9 @@ export function LocationPage({ prefix }) {
   const cta = useReveal();
 
   const waHref = `${WA_LINK}?text=${encodeURIComponent(t(`${prefix}.waText`))}`;
+  const serviceLinks = SERVICE_LINKS.map((link) =>
+    serviceOverrides?.[link.key] ? { ...link, href: serviceOverrides[link.key] } : link
+  );
 
   return (
     <>
@@ -54,7 +57,7 @@ export function LocationPage({ prefix }) {
             <h2>{t(`${prefix}.servicesH2`)}</h2>
           </div>
           <div className="loc-service-links">
-            {SERVICE_LINKS.map((link) => (
+            {serviceLinks.map((link) => (
               <Link href={link.href} className="loc-service-link" key={link.key}>
                 <span>{t(link.key)}</span>
                 <span className="arrow">→</span>
