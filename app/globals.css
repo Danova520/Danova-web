@@ -622,7 +622,7 @@ footer{background:var(--bg); border-top:1px solid var(--line-dark); padding:56px
    movil Y escritorio (antes en escritorio no habia ninguna barra fija). */
 .sticky-bar{
   position:fixed; left:0; right:0; bottom:0; z-index:150;
-  display:flex; gap:10px;
+  display:flex; gap:14px;
   padding:0 10px; padding-bottom:calc(10px + env(safe-area-inset-bottom));
 }
 .sticky-bar a{
@@ -641,7 +641,7 @@ body{padding-bottom:72px;}
 @media(min-width:900px){
   .sticky-bar{
     left:50%; right:auto; bottom:24px; transform:translateX(-50%);
-    padding:0; gap:14px;
+    padding:0; gap:24px;
   }
   .sticky-bar a{
     flex:0 0 auto; padding:15px 30px; font-size:12.5px; white-space:nowrap;
