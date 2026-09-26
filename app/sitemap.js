@@ -3,49 +3,49 @@ export default function sitemap() {
 
   return [
     {
-      url: "https://danovacreators.com",
+      url: "https://www.danovacreators.com",
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: "https://danovacreators.com/servicios/diseno-web",
+      url: "https://www.danovacreators.com/servicios/diseno-web",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://danovacreators.com/servicios/seo-local",
+      url: "https://www.danovacreators.com/servicios/seo-local",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://danovacreators.com/servicios/redes-sociales",
+      url: "https://www.danovacreators.com/servicios/redes-sociales",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://danovacreators.com/servicios/mantenimiento-web",
+      url: "https://www.danovacreators.com/servicios/mantenimiento-web",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://danovacreators.com/servicios/diseno-de-logo",
+      url: "https://www.danovacreators.com/servicios/diseno-de-logo",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://danovacreators.com/a-coruna",
+      url: "https://www.danovacreators.com/a-coruna",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: "https://danovacreators.com/seo-local-a-coruna",
+      url: "https://www.danovacreators.com/seo-local-a-coruna",
       lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
