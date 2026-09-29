@@ -5,9 +5,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
 const PACKAGES = [
-  { key: "pkg1", name: "Danova Base", items: 4, featured: false, btnClass: "btn-ghost" },
-  { key: "pkg2", name: "Danova Impulso", items: 5, featured: true, btnClass: "btn-primary" },
-  { key: "pkg3", name: "Danova Órbita", items: 5, featured: false, btnClass: "btn-ghost" },
+  { key: "pkg1", name: "Danova Base", items: 3, featured: false, btnClass: "btn-ghost" },
+  { key: "pkg2", name: "Danova Impulso", items: 4, featured: true, btnClass: "btn-primary" },
+  { key: "pkg3", name: "Danova Órbita", items: 4, featured: false, btnClass: "btn-ghost" },
 ];
 
 function PackageCard({ pkg, index }) {
