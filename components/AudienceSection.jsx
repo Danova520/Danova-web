@@ -55,6 +55,14 @@ function ShopIcon() {
     </svg>
   );
 }
+function GrowthIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <path d="M3 17 10 10l4 4 7-7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 6h6v6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 const AUDIENCE = [
   { Icon: RestaurantIcon, key: "paraquien.item1" },
@@ -63,6 +71,7 @@ const AUDIENCE = [
   { Icon: BuildingIcon, key: "paraquien.item4" },
   { Icon: BriefcaseIcon, key: "paraquien.item5" },
   { Icon: ShopIcon, key: "paraquien.item6" },
+  { Icon: GrowthIcon, key: "paraquien.item7" },
 ];
 
 function AudienceCard({ item, index }) {
