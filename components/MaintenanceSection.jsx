@@ -4,9 +4,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useReveal } from "@/hooks/useReveal";
 
 const TIERS = [
-  { key: "maint1", items: 3 },
-  { key: "maint2", items: 4 },
-  { key: "maint3", items: 3 },
+  { key: "maint1", items: 4 },
+  { key: "maint2", items: 5 },
+  { key: "maint3", items: 4 },
 ];
 
 export function MaintenanceSection() {
