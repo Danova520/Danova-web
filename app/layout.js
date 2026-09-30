@@ -44,7 +44,7 @@ const websiteJsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es" className={`${fraunces.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
-      <head>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -53,8 +53,6 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-      </head>
-      <body>
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>
